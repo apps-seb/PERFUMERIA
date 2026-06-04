@@ -3,475 +3,804 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Propuesta Arquitectura E-Commerce | Alta 57 para Nidia Perfumes</title>
+    <title>Propuesta E-Commerce Premium | Alta 57 para Nidia Perfumes</title>
     
+    <!-- Fonts: Inter for Apple-like clean look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Swiper for smooth sliders -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Confetti for conversion trigger -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* ================= VARIABLES DE LUJO ================= */
         :root {
-            --gold: #D4AF37;
-            --gold-light: #F3E5AB;
-            --gold-dark: #AA8529;
-            --bg-base: #050505;
-            --bg-card: #111111;
-            --bg-card-hover: #161616;
-            --text-main: #EAEAEA;
-            --text-muted: #9CA3AF;
-            --border-glow: rgba(212, 175, 55, 0.2);
-            --font-heading: 'Cinzel', serif;
-            --font-body: 'Montserrat', sans-serif;
-            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --apple-blue: #0071e3;
+            --apple-blue-hover: #0077ed;
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-dark: #b8860b;
+            --bg-black: #000000;
+            --card-glass: rgba(28, 28, 30, 0.7);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --text-white: #f5f5f7;
+            --text-gray: #86868b;
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --transition: all 0.5s cubic-bezier(0.28, 0.11, 0.32, 1);
         }
 
-        /* ================= RESET Y BASE ================= */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; font-size: 16px; }
         body {
-            font-family: var(--font-body);
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            line-height: 1.6;
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            font-family: var(--font-main);
+            -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
         
-        h1, h2, h3, h4, h5 { font-family: var(--font-heading); font-weight: 600; }
-        .text-gold {
-            background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+        /* Glassmorphism */
+        .glass-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; }
+        .accent-blue { color: var(--apple-blue); }
+        .accent-gold { color: var(--gold); }
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 40%, var(--apple-blue) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
-        section { padding: 6rem 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
-        
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-header h2 { font-size: 2.8rem; margin-bottom: 1rem; color: #fff; }
-        .section-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.9rem 1.8rem;
+            border-radius: 980px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        .btn-primary {
+            background-color: var(--apple-blue);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: var(--apple-blue-hover);
+            transform: scale(1.02);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--apple-blue);
+            color: var(--apple-blue);
+        }
+        .btn-outline:hover {
+            background: rgba(0, 113, 227, 0.1);
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #000;
+            font-weight: 700;
+        }
 
-        /* ================= HEADER / NAVEGACIÓN ================= */
+        /* Navigation */
         nav {
             position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-glow); padding: 1rem 5%;
-            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glass);
+            height: 52px; display: flex; align-items: center;
         }
-        .logo { font-family: var(--font-heading); font-size: 1.8rem; letter-spacing: 2px; color: var(--gold); }
-        .logo span { color: #fff; }
-        .client-badge {
-            border: 1px solid var(--gold); padding: 0.4rem 1.2rem; border-radius: 50px;
-            font-size: 0.8rem; letter-spacing: 1px; color: var(--gold-light); text-transform: uppercase;
+        .nav-content {
+            display: flex; justify-content: space-between; align-items: center; width: 100%;
+            max-width: 1024px; margin: 0 auto; padding: 0 22px;
         }
+        .logo { font-weight: 600; font-size: 1.2rem; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .logo i { color: var(--gold); }
+        .nav-links a {
+            color: var(--text-gray); font-size: 0.8rem; text-decoration: none;
+            margin-left: 20px; transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #fff; }
 
-        /* ================= HERO ================= */
+        /* Hero */
         .hero {
-            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; position: relative;
-            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.1) 0%, rgba(5,5,5,1) 80%),
-                        url('https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=2000&auto=format&fit=crop') center/cover;
-            background-attachment: fixed;
+            padding-top: 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 113, 227, 0.15) 0%, rgba(0,0,0,1) 80%);
+            position: relative;
         }
-        .hero h1 { font-size: 4.5rem; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: 1px; }
-        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 800px; margin-bottom: 3rem; }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #000;
-            padding: 1.2rem 3rem; font-family: var(--font-heading); font-weight: 700; font-size: 1.1rem;
-            border: none; border-radius: 3px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
-            text-decoration: none; transition: var(--transition); box-shadow: 0 10px 30px rgba(212,175,55,0.2);
-            display: inline-block;
-        }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(212,175,55,0.4); color: #000; }
+        .hero h1 { font-size: 5rem; margin-bottom: 1.5rem; line-height: 1.1; }
+        .hero p { font-size: 1.5rem; color: var(--text-gray); max-width: 850px; margin-bottom: 3rem; font-weight: 300; }
 
-        /* ================= ANÁLISIS COMPETITIVO ================= */
-        .audit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-        .audit-card {
-            background: var(--bg-card); border: 1px solid var(--border-glow); padding: 3rem;
-            border-radius: 8px; position: relative; overflow: hidden;
-        }
-        .audit-card::before { content: ''; position: absolute; left: 0; top: 0; width: 3px; height: 100%; background: var(--gold); }
-        .audit-card h3 { font-size: 1.6rem; margin-bottom: 1rem; color: #fff; }
-        .list-features { list-style: none; margin-top: 1.5rem; }
-        .list-features li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1rem; color: var(--text-muted); }
-        .list-features i { color: var(--gold); margin-top: 5px; font-size: 0.9rem; }
+        /* Sections */
+        section { padding: 8rem 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .section-title { font-size: 3.5rem; margin-bottom: 1rem; text-align: center; }
+        .section-subtitle { text-align: center; color: var(--text-gray); font-size: 1.3rem; margin-bottom: 5rem; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6; }
 
-        /* ================= ARQUITECTURA / ECOSISTEMA ================= */
-        .arch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .arch-item {
-            background: var(--bg-card); padding: 2.5rem; border-radius: 8px; border: 1px solid transparent;
-            transition: var(--transition); text-align: center;
-        }
-        .arch-item:hover { border-color: var(--gold); transform: translateY(-5px); background: var(--bg-card-hover); }
-        .arch-item i { font-size: 2.5rem; color: var(--gold); margin-bottom: 1.5rem; }
-        .arch-item h4 { font-size: 1.3rem; margin-bottom: 1rem; color: #fff; }
-        .arch-item p { font-size: 0.95rem; color: var(--text-muted); }
+        /* Grids */
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
 
-        /* ================= FILTROS AVANZADOS ================= */
-        .tags-wrapper { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 3rem; }
-        .tag {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
-            color: var(--text-main); padding: 0.6rem 1.5rem; border-radius: 50px; font-size: 0.9rem;
+        /* Category Slider */
+        .swiper { width: 100%; padding-bottom: 60px; }
+        .category-card-slide {
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: center;
+            cursor: pointer;
             transition: var(--transition);
         }
-        .tag:hover { background: rgba(212, 175, 55, 0.1); border-color: var(--gold); color: var(--gold-light); }
-        .tag-special { border-color: var(--gold); color: var(--gold-light); background: rgba(212, 175, 55, 0.05); }
+        .category-card-slide:hover, .category-card-slide.active {
+            background: rgba(0, 113, 227, 0.1);
+            border-color: var(--apple-blue);
+            transform: scale(1.05);
+        }
+        .category-card-slide i { font-size: 2.8rem; margin-bottom: 1rem; color: var(--gold); display: block; }
+        .category-card-slide span { font-weight: 500; font-size: 1.2rem; }
 
-        /* ================= DEMO: PÁGINA DE PRODUCTO ================= */
-        .pdp-demo {
-            background: #080808; border: 1px solid var(--border-glow); border-radius: 12px;
-            padding: 3rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative;
+        /* Products Grid */
+        .product-card {
+            background: var(--card-glass);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-glass);
+            transition: var(--transition);
+            position: relative;
         }
-        .pdp-badge {
-            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
-            background: var(--gold); color: #000; padding: 5px 20px; font-size: 0.8rem;
-            font-family: var(--font-heading); font-weight: 700; letter-spacing: 2px; border-radius: 3px;
+        .product-card:hover { transform: scale(1.03); border-color: var(--gold); background: rgba(255,255,255,0.05); }
+        .product-img-placeholder {
+            width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, #1d1d1f 0%, #111 100%);
+            border-radius: 14px; margin-bottom: 1.2rem;
+            display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: var(--text-gray);
+            border: 1px solid rgba(255,255,255,0.05);
         }
+        .product-card h4 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .product-card .price { color: var(--gold); font-weight: 700; font-size: 1.3rem; }
+        .badge-tag { position: absolute; top: 12px; right: 12px; background: var(--apple-blue); font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; font-weight: 700; }
+
+        /* Demo Panels */
+        .demo-panel {
+            background: #161617;
+            border-radius: 30px;
+            padding: 3rem;
+            height: 100%;
+            border: 1px solid var(--border-glass);
+        }
+        .search-bar-container { position: relative; margin-bottom: 2.5rem; }
+        .search-bar {
+            width: 100%;
+            padding: 1.2rem 1.5rem 1.2rem 3.8rem;
+            background: #252527;
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+        .search-bar:focus { border-color: var(--apple-blue); background: #2d2d2f; }
+        .search-icon { position: absolute; left: 1.4rem; top: 50%; transform: translateY(-50%); color: var(--text-gray); font-size: 1.3rem; }
+
+        .filter-group { margin-bottom: 2.5rem; }
+        .filter-title { font-weight: 600; margin-bottom: 14px; display: block; color: var(--text-white); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.08em; }
+        .filter-tags { display: flex; flex-wrap: wrap; gap: 12px; }
+        .filter-tag {
+            background: #252527;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+        .filter-tag:hover { background: #2d2d2f; border-color: rgba(255,255,255,0.1); }
+        .filter-tag.active { background: rgba(0, 113, 227, 0.15); color: var(--apple-blue); border-color: var(--apple-blue); }
+        .filter-tag-special { border-color: var(--gold-dark); color: var(--gold-light); }
+        .filter-tag-special.active { background: rgba(212, 175, 55, 0.15); border-color: var(--gold); color: var(--gold); }
+
+        /* Decants Selection */
+        .decant-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin-top: 1.8rem;
+        }
+        .decant-option {
+            padding: 1.8rem 1rem;
+            border: 2px solid var(--border-glass);
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            background: rgba(255,255,255,0.02);
+        }
+        .decant-option:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.05); }
+        .decant-option.active { border-color: var(--gold); background: rgba(212, 175, 55, 0.08); }
+        .decant-option .size { font-weight: 700; font-size: 1.4rem; display: block; margin-bottom: 6px; }
+        .decant-option .price { color: var(--text-gray); font-size: 1rem; }
+
+        /* PDP Simulation */
+        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 2rem; }
+        .spec-item { background: rgba(255,255,255,0.04); padding: 1.2rem; border-radius: 16px; border-left: 4px solid var(--gold); }
+        .spec-label { font-size: 0.75rem; color: var(--text-gray); text-transform: uppercase; display: block; margin-bottom: 5px; letter-spacing: 0.05em; }
+        .spec-value { font-size: 1.05rem; color: #fff; font-weight: 500; }
+
+        .pyramid-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2rem; text-align: center; }
+        .pyramid-box { background: #0c0c0d; padding: 1.8rem 1rem; border-radius: 18px; border: 1px solid var(--border-glass); }
+
+        /* Pricing & Plans */
+        .pricing-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .pricing-table th { text-align: left; padding: 1.8rem; border-bottom: 1px solid var(--border-glass); color: var(--text-gray); font-weight: 500; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .pricing-table td { padding: 1.8rem; border-bottom: 1px solid var(--border-glass); vertical-align: top; }
+
+        .total-section {
+            margin-top: 4rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 4rem;
+        }
+        .payment-plan {
+            background: #161617;
+            border-radius: 24px;
+            padding: 2.5rem;
+            flex: 1;
+            border: 1px solid var(--border-glass);
+        }
+        .payment-step { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.2rem; }
+        .step-circle { width: 34px; height: 34px; border-radius: 50%; background: var(--apple-blue); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; }
         
-        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
-        .spec-row { display: flex; flex-direction: column; background: var(--bg-card); padding: 1rem 1.5rem; border-left: 2px solid var(--gold); }
-        .spec-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 4px; }
-        .spec-value { font-size: 1.1rem; color: #fff; font-weight: 500; }
-
-        .pyramid-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center; }
-        .pyramid-box { background: #111; border: 1px dashed var(--border-glow); padding: 1.5rem; border-radius: 6px; }
-        .pyramid-box i { color: var(--text-muted); margin-bottom: 10px; font-size: 1.2rem; }
-
-        /* ================= TABLA DINÁMICA DE INVERSIÓN ================= */
-        .pricing-container { background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-glow); overflow: hidden; }
-        .price-row {
-            display: grid; grid-template-columns: 3fr 1fr 1fr; padding: 2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05); align-items: center; transition: var(--transition);
+        .total-box-final {
+            text-align: right;
         }
-        .price-row:hover { background: rgba(255,255,255,0.02); }
-        .price-header { background: #0a0a0a; font-family: var(--font-heading); color: var(--gold); border-bottom: 1px solid var(--gold); }
-        
-        .item-info h4 { font-size: 1.2rem; color: #fff; margin-bottom: 5px; }
-        .item-info p { font-size: 0.9rem; color: var(--text-muted); }
-        .item-cost { font-family: var(--font-body); font-weight: 600; font-size: 1.2rem; color: var(--gold-light); text-align: right; }
+        .total-price-tag { font-size: 4.5rem; font-weight: 700; color: #fff; line-height: 1; margin: 15px 0; letter-spacing: -0.03em; }
+
+        /* Reveal Animation */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Footer Interaction */
+        .footer-cta {
+            background: linear-gradient(180deg, #050505 0%, #000 100%);
+            padding: 8rem 0;
+            text-align: center;
+        }
+
+        /* Pricing Selector Toggle (from initial code) */
         .item-action { text-align: right; }
-
-        /* Switch Checkbox */
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--gold); }
+        input:checked + .slider { background-color: var(--apple-blue); }
         input:checked + .slider:before { transform: translateX(22px); }
         input:disabled + .slider { opacity: 0.5; cursor: not-allowed; }
 
-        .total-row { background: rgba(212, 175, 55, 0.05); padding: 3rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .total-label { font-family: var(--font-heading); font-size: 1.8rem; color: #fff; }
-        .total-amount { font-family: var(--font-heading); font-size: 3rem; color: var(--gold); font-weight: 700; transition: transform 0.3s; }
-
-        /* ================= ANIMACIONES SCROLL ================= */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        /* ================= FOOTER ================= */
-        footer { background: #000; padding: 4rem 5%; text-align: center; border-top: 1px solid var(--border-glow); }
-
-        /* ================= RESPONSIVE ================= */
+        /* Responsive */
+        @media (max-width: 992px) {
+            .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 4rem; }
+            .total-section { flex-direction: column; align-items: stretch; gap: 3rem; }
+        }
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; }
-            .audit-grid, .specs-grid, .pyramid-grid { grid-template-columns: 1fr; }
-            .price-row { grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem; }
-            .item-cost, .item-action { text-align: left; }
-            .total-row { flex-direction: column; text-align: left; gap: 1rem; align-items: flex-start; }
-            .total-amount { font-size: 2.2rem; }
+            .grid-3, .grid-2, .grid-4 { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 3rem; }
+            .section-title { font-size: 2.5rem; }
+            .total-price-tag { font-size: 3.5rem; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">ALTA<span>57</span></div>
-        <div class="client-badge"><i class="fa-solid fa-crown" style="margin-right: 5px;"></i> Para Nidia Perfumes</div>
+        <div class="nav-content">
+            <div class="logo"><i class="fa-solid fa-crown"></i> ALTA 57</div>
+            <div class="nav-links">
+                <a href="#arquitectura">Tecnología</a>
+                <a href="#experiencia">Experiencia</a>
+                <a href="#infra">Infraestructura</a>
+                <a href="#cotizacion">Cotización</a>
+            </div>
+        </div>
     </nav>
 
     <header class="hero">
         <div class="container reveal">
-            <h4 class="text-gold" style="font-family: var(--font-body); letter-spacing: 4px; margin-bottom: 1rem; font-size: 0.9rem;">Propuesta de Desarrollo E-Commerce</h4>
-            <h1>El Lujo Hecho Código</h1>
-            <p>Una arquitectura tecnológica diseñada no solo para vender fragancias, sino para transmitir exclusividad, dominar el mercado colombiano y generar una experiencia inmersiva que convierta visitantes en coleccionistas.</p>
-            <a href="#auditoria" class="btn-primary mt-4">Descubrir la Estrategia</a>
+            <h4 class="accent-blue" style="letter-spacing: 0.4em; margin-bottom: 2rem; font-weight: 500; font-size: 0.9rem;">DIGITAL LUXURY ARCHITECTURE</h4>
+            <h1 class="gradient-text">Arquitectura Olfativa <br>en el <span class="accent-gold">Código.</span></h1>
+            <p>Infraestructura Shopify Premium diseñada exclusivamente para Nidia Perfumes. Una experiencia visual Apple-level que fusiona tecnología Liquid con elegancia absoluta.</p>
+            <div style="display: flex; gap: 2rem; justify-content: center; margin-top: 1rem;">
+                <a href="#experiencia" class="btn btn-primary">Explorar Interfaz</a>
+                <a href="#cotizacion" class="btn btn-outline">Cotización Detallada</a>
+            </div>
         </div>
     </header>
 
-    <section id="auditoria">
+    <section id="arquitectura">
         <div class="container">
-            <div class="section-header reveal">
-                <h2 class="text-gold">Auditoría Competitiva</h2>
-                <p>Análisis técnico del referente del mercado y nuestra ruta para superarlo tecnológicamente.</p>
-            </div>
+            <h2 class="section-title reveal">Arquitectura <span class="accent-blue">Shopify Liquid</span></h2>
+            <p class="section-subtitle reveal">No instalamos plantillas; construimos un motor de ventas a medida utilizando el lenguaje nativo de Shopify (Liquid) para garantizar velocidad extrema y personalización total.</p>
 
-            <div class="audit-grid reveal">
-                <div>
-                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: #fff;">El Escenario Actual: <span style="font-family: var(--font-body); font-weight: 300;">disfragancias.com</span></h3>
-                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Hemos desglosado su arquitectura. Poseen un catálogo robusto, menús extensos y variables de decants funcionales. Sin embargo, su infraestructura (presumiblemente basada en constructores tradicionales) presenta <strong>fricciones de conversión</strong>:</p>
-                    <ul class="list-features">
-                        <li><i class="fa-solid fa-xmark" style="color: #ef4444;"></i> Recargas completas de página al usar filtros, rompiendo la atención del usuario.</li>
-                        <li><i class="fa-solid fa-xmark" style="color: #ef4444;"></i> Experiencia móvil saturada al elegir múltiples variaciones de un perfume.</li>
-                        <li><i class="fa-solid fa-xmark" style="color: #ef4444;"></i> Diseño gráfico estándar que no evoca la sensación de "Alta Perfumería".</li>
+            <div class="grid-3">
+                <div class="glass-card reveal">
+                    <i class="fa-solid fa-microchip accent-blue" style="font-size: 2.5rem; margin-bottom: 1.5rem; display: block;"></i>
+                    <h3>Desarrollo Core Custom</h3>
+                    <p style="color: var(--text-gray); margin-top: 1rem; line-height: 1.7;">Codificación nativa para eliminar el "código basura" de las plantillas comerciales. Logramos un puntaje de +90 en Google PageSpeed, esencial para el SEO y la retención del cliente.</p>
+                </div>
+                <div class="glass-card reveal">
+                    <i class="fa-solid fa-layer-group accent-blue" style="font-size: 2.5rem; margin-bottom: 1.5rem; display: block;"></i>
+                    <h3>Ecosistema de Apps</h3>
+                    <ul style="color: var(--text-gray); margin-top: 1rem; list-style: none; padding-left: 0; line-height: 2.2;">
+                        <li><i class="fa-solid fa-circle-check accent-gold" style="font-size: 0.8rem;"></i> <strong>Shopify Search & Discovery:</strong> Lógica de filtros.</li>
+                        <li><i class="fa-solid fa-circle-check accent-gold" style="font-size: 0.8rem;"></i> <strong>Klaviyo:</strong> Automatización de Email Marketing.</li>
+                        <li><i class="fa-solid fa-circle-check accent-gold" style="font-size: 0.8rem;"></i> <strong>Matrixify:</strong> Control masivo de catálogo.</li>
+                        <li><i class="fa-solid fa-circle-check accent-gold" style="font-size: 0.8rem;"></i> <strong>Rebuy:</strong> Recomendaciones con IA.</li>
                     </ul>
                 </div>
-                <div class="audit-card">
-                    <h3 class="text-gold">La Solución Alta 57</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Desarrollaremos una plataforma superior con arquitectura moderna garantizando retención psicológica y velocidad.</p>
-                    <ul class="list-features">
-                        <li><i class="fa-solid fa-bolt"></i> <strong>Filtros AJAX Inmediatos:</strong> Búsqueda en milisegundos sin recargar la web.</li>
-                        <li><i class="fa-solid fa-mobile-screen"></i> <strong>UI/UX Mobile-First:</strong> Selectores de "Decants" elegantes y fluidos en celulares.</li>
-                        <li><i class="fa-solid fa-envelope-open-text"></i> <strong>Recuperación de Carritos:</strong> Automatización agresiva para rescatar ventas perdidas.</li>
-                    </ul>
+                <div class="glass-card reveal">
+                    <i class="fa-solid fa-shield-halved accent-blue" style="font-size: 2.5rem; margin-bottom: 1.5rem; display: block;"></i>
+                    <h3>Seguridad y Grado Empresarial</h3>
+                    <p style="color: var(--text-gray); margin-top: 1rem; line-height: 1.7;">Cumplimiento PCI-DSS Nivel 1 y Certificación SSL de grado bancario. Su tienda estará preparada para procesar miles de transacciones simultáneas sin caídas.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="bg-card">
+    <section id="experiencia" style="background: #050505;">
         <div class="container">
-            <div class="section-header reveal">
-                <h2 class="text-gold">Anatomía del Proyecto</h2>
-                <p>Construiremos un ecosistema digital completo, optimizado desde el encabezado hasta el pie de página.</p>
+            <h2 class="section-title reveal">La Nueva <span class="accent-gold">Interfaz</span></h2>
+            <p class="section-subtitle reveal">Diseñada bajo la filosofía de Apple: limpia, intuitiva y fluida. Interactúe con los paneles de filtros y búsqueda para visualizar el despliegue técnico.</p>
+
+            <!-- Categorías Slider -->
+            <div class="reveal" style="margin-bottom: 7rem;">
+                <h3 style="margin-bottom: 2.5rem; font-weight: 500; font-size: 1.8rem;">1. Selección de Productos por Categoría (Panel Interactivo)</h3>
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="category-card-slide active" onclick="updateCategory('Nicho')">
+                                <i class="fa-solid fa-gem"></i>
+                                <span>Perfumería Nicho</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="category-card-slide" onclick="updateCategory('Diseñador')">
+                                <i class="fa-solid fa-crown"></i>
+                                <span>Diseñador</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="category-card-slide" onclick="updateCategory('Decants')">
+                                <i class="fa-solid fa-vials"></i>
+                                <span>Decants / Muestras</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="category-card-slide" onclick="updateCategory('Caballeros')">
+                                <i class="fa-solid fa-mars"></i>
+                                <span>Caballeros</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="category-card-slide" onclick="updateCategory('Damas')">
+                                <i class="fa-solid fa-venus"></i>
+                                <span>Damas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-4" id="product-display" style="margin-top: 2rem;">
+                    <!-- Productos cargados dinámicamente -->
+                </div>
             </div>
 
-            <div class="arch-grid reveal">
-                <div class="arch-item">
-                    <i class="fa-solid fa-bars-staggered"></i>
-                    <h4>1. Mega Menú Inteligente</h4>
-                    <p>Navegación jerárquica por marcas y categorías con un <strong>Buscador Predictivo</strong> que muestra imágenes del perfume antes de presionar enter.</p>
+            <!-- Recomendados y Más Vendidos -->
+            <div class="reveal" style="margin-bottom: 7rem;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem;">
+                    <h3 style="font-weight: 500; font-size: 1.8rem;">2. Curaduría: Más Vendidos y Recomendados</h3>
+                    <a href="#" class="accent-blue" style="text-decoration: none; font-size: 0.95rem; font-weight: 500;">Ver catálogo completo <i class="fa-solid fa-chevron-right" style="margin-left: 5px;"></i></a>
                 </div>
-                <div class="arch-item">
-                    <i class="fa-solid fa-gem"></i>
-                    <h4>2. Home (Hero & Categorías)</h4>
-                    <p>Diseño enfocado en el deseo visual. Sliders en alta resolución, grillas de "Más Vendidos" y accesos directos para la compra impulsiva.</p>
+                <div class="grid-4">
+                    <div class="product-card">
+                        <div class="badge-tag">MÁS VENDIDO</div>
+                        <div class="product-img-placeholder"><i class="fa-solid fa-bottle-droplet"></i></div>
+                        <h4 style="font-size:0.9rem; color:var(--text-gray);">Xerjoff</h4>
+                        <h4>Naxos 1861</h4>
+                        <div class="price">$1.350.000</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-img-placeholder"><i class="fa-solid fa-bottle-droplet"></i></div>
+                        <h4 style="font-size:0.9rem; color:var(--text-gray);">Initio</h4>
+                        <h4>Side Effect</h4>
+                        <div class="price">$1.150.000</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="badge-tag" style="background: var(--gold-dark);">PREMIUM</div>
+                        <div class="product-img-placeholder"><i class="fa-solid fa-bottle-droplet"></i></div>
+                        <h4 style="font-size:0.9rem; color:var(--text-gray);">Maison Crivelli</h4>
+                        <h4>Hibiscus Mahajád</h4>
+                        <div class="price">$1.580.000</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="badge-tag">TENDENCIA</div>
+                        <div class="product-img-placeholder"><i class="fa-solid fa-bottle-droplet"></i></div>
+                        <h4 style="font-size:0.9rem; color:var(--text-gray);">Chanel</h4>
+                        <h4>Platinum Egoiste</h4>
+                        <div class="price">$780.000</div>
+                    </div>
                 </div>
-                <div class="arch-item">
-                    <i class="fa-solid fa-vials"></i>
-                    <h4>3. Lógica de Variables (Decants)</h4>
-                    <p>Motor de e-commerce ajustado para separar la venta de la Botella Completa vs. Decants (Ej: 5ml, 10ml), sincronizando inventario y precio dinámicamente.</p>
+            </div>
+
+            <!-- Filtros y Búsqueda -->
+            <div class="grid-2">
+                <div class="demo-panel reveal">
+                    <h3 class="accent-blue" style="margin-bottom: 1.8rem; font-weight: 500;">Buscador en Tiempo Real</h3>
+                    <div class="search-bar-container">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" class="search-bar" placeholder="Buscar por marca, notas u ocasión..." id="real-time-search">
+                    </div>
+                    <div id="search-preview">
+                        <p style="color: var(--text-gray); font-size: 0.95rem;">Simulación: Escribe "Creed" o "Vainilla"...</p>
+                    </div>
                 </div>
-                <div class="arch-item">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <h4>4. Checkout & Footer</h4>
-                    <p>Cierre de confianza. Pasarelas de pago para Colombia, políticas de envío, sellos de originalidad y suscripción a newsletter estructurados en el pie de página.</p>
+
+                <div class="demo-panel reveal">
+                    <h3 class="accent-gold" style="margin-bottom: 1.8rem; font-weight: 500;">Panel de Filtros Avanzados</h3>
+                    <div class="filter-group">
+                        <span class="filter-title">Ocación de Uso (Filtros Inteligentes)</span>
+                        <div class="filter-tags">
+                            <span class="filter-tag filter-tag-special active">Citas</span>
+                            <span class="filter-tag filter-tag-special">Universidad</span>
+                            <span class="filter-tag filter-tag-special">Oficina</span>
+                            <span class="filter-tag filter-tag-special">Gym</span>
+                            <span class="filter-tag filter-tag-special">Fiesta</span>
+                            <span class="filter-tag filter-tag-special">Playa</span>
+                            <span class="filter-tag filter-tag-special">Noche</span>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-title">Notas y Acuerdos</span>
+                        <div class="filter-tags">
+                            <span class="filter-tag">Cítrico</span>
+                            <span class="filter-tag active">Amaderado</span>
+                            <span class="filter-tag">Cuero</span>
+                            <span class="filter-tag">Vainilla</span>
+                            <span class="filter-tag">Oud</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decants & PDP Panel -->
+            <div class="glass-card reveal" style="margin-top: 4rem; background: rgba(255,255,255,0.03);">
+                <div class="grid-2">
+                    <div>
+                        <h3 class="accent-gold" style="font-size: 2.2rem; margin-bottom: 1.2rem;">Lógica de Decants Dinámica</h3>
+                        <p style="color: var(--text-gray); margin-bottom: 2rem; line-height: 1.7;">Sistema intuitivo para alternar entre Botella Full y Decants (5ml, 10ml, etc.). El precio y el stock se sincronizan automáticamente sin recargas, brindando una experiencia de compra fluida y moderna.</p>
+
+                        <div class="decant-selector">
+                            <div class="decant-option" onclick="setDecant(this, '48.000')">
+                                <span class="size">5ml</span>
+                                <span class="price">$48.000</span>
+                            </div>
+                            <div class="decant-option active" onclick="setDecant(this, '85.000')">
+                                <span class="size">10ml</span>
+                                <span class="price">$85.000</span>
+                            </div>
+                            <div class="decant-option" onclick="setDecant(this, '920.000')">
+                                <span class="size">100ml</span>
+                                <span class="price">$920.000</span>
+                                <small style="display:block; font-size: 0.7rem; color: var(--gold); font-weight: 700; margin-top: 5px;">BOTELLA ORIGINAL</small>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 2.5rem; display: flex; gap: 1.5rem;">
+                            <button class="btn btn-primary" style="flex: 2; font-size: 1.1rem;">Añadir al Carrito — $<span id="dynamic-price">85.000</span></button>
+                            <button class="btn btn-outline" style="flex: 0.5;"><i class="fa-regular fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 2.5rem; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05);">
+                        <h4 class="accent-blue" style="margin-bottom: 1.5rem; letter-spacing: 0.1em; font-size: 0.9rem;">FICHA TÉCNICA (PDP)</h4>
+                        <div class="specs-grid">
+                            <div class="spec-item"><span class="spec-label">Concentración</span><span class="spec-value">Eau de Parfum</span></div>
+                            <div class="spec-item"><span class="spec-label">País de Origen</span><span class="spec-value">Francia / Italia</span></div>
+                            <div class="spec-item" style="grid-column: span 2;"><span class="spec-label">Acordes Principales</span><span class="spec-value accent-gold">Avainillado, Lavanda, Amaderado, Dulce</span></div>
+                        </div>
+                        <div class="pyramid-grid">
+                            <div class="pyramid-box"><i class="fa-solid fa-wind" style="color: var(--apple-blue); font-size: 1.5rem; margin-bottom: 10px;"></i><span class="spec-label">Salida</span><span class="spec-value">Vainilla</span></div>
+                            <div class="pyramid-box"><i class="fa-solid fa-heart" style="color: var(--apple-blue); font-size: 1.5rem; margin-bottom: 10px;"></i><span class="spec-label">Corazón</span><span class="spec-value">Lavanda</span></div>
+                            <div class="pyramid-box"><i class="fa-solid fa-leaf" style="color: var(--apple-blue); font-size: 1.5rem; margin-bottom: 10px;"></i><span class="spec-label">Base</span><span class="spec-value">Vetiver</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section>
-        <div class="container text-center">
-            <div class="section-header reveal">
-                <h2 class="text-gold">Motor de Filtros Avanzados</h2>
-                <p>El corazón de la conversión. Tus clientes cruzarán variables complejas al instante para encontrar su firma olfativa ideal.</p>
-            </div>
-
-            <div class="tags-wrapper reveal">
-                <span class="tag">Por Precio</span>
-                <span class="tag">Género</span>
-                <span class="tag">Categorías</span>
-                <span class="tag">Más Vendidas</span>
-                <span class="tag">Acordes Principales</span>
-                <span class="tag">Aromas</span>
-                <span class="tag">Climas</span>
-                <span class="tag">Marcas</span>
-                <span class="tag">Año de Lanzamiento</span>
-                <span class="tag">País</span>
-                <span class="tag">Perfumista</span>
-                <span class="tag">Tamaño</span>
-            </div>
-
-            <h4 class="mt-4 mb-3 text-gold reveal" style="font-family: var(--font-body); letter-spacing: 2px; margin-top: 3rem; margin-bottom: 1.5rem;">Filtro Especial Dinámico: "Mejor Tiempo de Uso"</h4>
-            <div class="tags-wrapper reveal">
-                <span class="tag tag-special"><i class="fa-solid fa-heart" style="margin-right: 5px;"></i> Citas</span>
-                <span class="tag tag-special"><i class="fa-solid fa-sun" style="margin-right: 5px;"></i> Día</span>
-                <span class="tag tag-special"><i class="fa-solid fa-graduation-cap" style="margin-right: 5px;"></i> Universidad</span>
-                <span class="tag tag-special"><i class="fa-solid fa-glass-cheers" style="margin-right: 5px;"></i> Fiesta</span>
-                <span class="tag tag-special"><i class="fa-solid fa-dumbbell" style="margin-right: 5px;"></i> Gym</span>
-                <span class="tag tag-special"><i class="fa-solid fa-moon" style="margin-right: 5px;"></i> Noche</span>
-                <span class="tag tag-special"><i class="fa-solid fa-star" style="margin-right: 5px;"></i> Ocasiones Especiales</span>
-                <span class="tag tag-special"><i class="fa-solid fa-briefcase" style="margin-right: 5px;"></i> Oficina</span>
-                <span class="tag tag-special"><i class="fa-solid fa-umbrella-beach" style="margin-right: 5px;"></i> Playa</span>
-            </div>
-        </div>
-    </section>
-
-    <section class="bg-card">
+    <section id="infra">
         <div class="container">
-            <div class="section-header reveal">
-                <h2 class="text-gold">La Página de Producto (PDP)</h2>
-                <p>Las descripciones de texto aburridas no venden lujo. Crearemos <strong>Tarjetas Dinámicas</strong> integrando imágenes, videos y Preguntas Frecuentes. <br>Aquí una simulación real de cómo se verá la información técnica de sus fragancias:</p>
+            <h2 class="section-title reveal">Infraestructura <span class="accent-blue">Global</span></h2>
+            <p class="section-subtitle reveal">Garantizamos una base técnica sólida: desde la compra de dominios profesionales hasta el almacenamiento en la nube más rápido del mercado.</p>
+            <div class="grid-3">
+                <div class="glass-card reveal">
+                    <i class="fa-solid fa-globe accent-blue" style="font-size: 2rem; margin-bottom: 1.5rem; display: block;"></i>
+                    <h4>Dominios y SSL</h4>
+                    <p style="color: var(--text-gray); margin-top: 1rem; font-size: 1rem; line-height: 1.6;">Gestión y configuración de dominios <strong>.com</strong> y <strong>.co</strong>. Instalación de certificados SSL para garantizar transacciones 100% seguras y encriptadas.</p>
+                </div>
+                <div class="glass-card reveal">
+                    <i class="fa-solid fa-server accent-blue" style="font-size: 2rem; margin-bottom: 1.5rem; display: block;"></i>
+                    <h4>Storage y CDN (4K)</h4>
+                    <p style="color: var(--text-gray); margin-top: 1rem; font-size: 1rem; line-height: 1.6;">Uso de la red de entrega de contenido (CDN) global de Shopify para servir imágenes y videos en alta resolución (4K) con tiempos de carga instantáneos.</p>
+                </div>
+                <div class="glass-card reveal">
+                    <i class="fa-solid fa-id-badge accent-blue" style="font-size: 2rem; margin-bottom: 1.5rem; display: block;"></i>
+                    <h4>Planes y Suscripciones</h4>
+                    <p style="color: var(--text-gray); margin-top: 1rem; font-size: 1rem; line-height: 1.6;">Asesoría técnica en la elección de planes Shopify y gestión de licencias premium para herramientas de marketing y suscripciones recurrentes.</p>
+                </div>
             </div>
 
-            <div class="pdp-demo reveal">
-                <div class="pdp-badge">VISTA PREVIA DE INTERFAZ</div>
-                <h3 class="text-gold text-center" style="font-size: 2rem; margin-bottom: 2rem; margin-top: 1rem;">Acerca del Perfume</h3>
-                
-                <div class="specs-grid">
-                    <div class="spec-row"><span class="spec-label">Género</span><span class="spec-value">Masculino</span></div>
-                    <div class="spec-row"><span class="spec-label">Categoría de la marca</span><span class="spec-value">Diseñador</span></div>
-                    <div class="spec-row"><span class="spec-label">Clima Ideal</span><span class="spec-value">Invierno (Frío), Otoño (Templado, frío), Primavera (Templado, cálido)</span></div>
-                    <div class="spec-row"><span class="spec-label">Concentración</span><span class="spec-value">Eau de Parfum</span></div>
-                    <div class="spec-row"><span class="spec-label">Año de lanzamiento</span><span class="spec-value">2023</span></div>
-                    <div class="spec-row"><span class="spec-label">País de Origen</span><span class="spec-value">Italia</span></div>
-                    <div class="spec-row" style="grid-column: 1 / -1; text-align: center; background: rgba(212, 175, 55, 0.05); border: 1px solid var(--border-glow);">
-                        <span class="spec-label">Acordes principales</span>
-                        <span class="spec-value text-gold" style="font-size: 1.3rem;">Avainillado, Lavanda, Aromático, Amaderado, Dulce</span>
-                    </div>
-                </div>
-
-                <div class="pyramid-grid">
-                    <div class="pyramid-box">
-                        <i class="fa-solid fa-wind"></i>
-                        <span class="spec-label" style="display: block;">Notas de Salida</span>
-                        <span class="spec-value text-gold">Vainilla</span>
-                    </div>
-                    <div class="pyramid-box">
-                        <i class="fa-solid fa-heart-pulse"></i>
-                        <span class="spec-label" style="display: block;">Notas de Corazón</span>
-                        <span class="spec-value text-gold">Lavanda</span>
-                    </div>
-                    <div class="pyramid-box">
-                        <i class="fa-solid fa-leaf"></i>
-                        <span class="spec-label" style="display: block;">Notas de Base</span>
-                        <span class="spec-value text-gold">Vetiver</span>
-                    </div>
-                </div>
+            <div class="glass-card reveal" style="margin-top: 4rem; border-left: 5px solid var(--gold); background: rgba(212, 175, 55, 0.03);">
+                <h3 class="accent-gold" style="margin-bottom: 1.5rem;">Análisis Técnico Detallado</h3>
+                <p style="color: var(--text-gray); line-height: 1.8;">Tras un análisis exhaustivo de competidores como <i>Disfragancias</i> u <i>Olfato</i>, identificamos que aunque poseen catálogos amplios, su implementación técnica carece de la fluidez necesaria para el <strong>mercado de lujo</strong>. <br><br>Sus sitios presentan recargas de página pesadas, saltos visuales (CLS) y buscadores que no sugieren resultados precisos. <strong>Nuestra Propuesta:</strong> Implementaremos una interfaz basada en micro-interacciones AJAX que eliminan la fricción. Usaremos búsqueda predictiva que entiende notas olfativas y una arquitectura de datos plana para que el filtrado ocurra en milisegundos. No desacreditamos a la competencia, pero evolucionamos su implementación hacia el lujo digital Apple-style, mejorando la retención visual y reduciendo la tasa de rebote.</p>
             </div>
         </div>
     </section>
 
-    <section id="inversion">
+    <section id="cotizacion">
         <div class="container">
-            <div class="section-header reveal">
-                <h2 class="text-gold">Plan de Inversión Tecnológica</h2>
-                <p>Presupuesto estructurado por fases metodológicas. Active los módulos adicionales para visualizar su inversión total en Pesos Colombianos (COP).</p>
-            </div>
+            <h2 class="section-title reveal">Plan de <span class="accent-gold">Inversión Tecnológica</span></h2>
+            <p class="section-subtitle reveal">Desglose detallado de las fases de desarrollo. Active los módulos opcionales para ajustar su cotización.</p>
+            <div class="glass-card reveal">
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Fase / Módulo</th>
+                            <th>Entregables Detallados</th>
+                            <th style="text-align: right;">Inversión (COP)</th>
+                            <th style="text-align: right;">Selección</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Fase 1: Estrategia y UI/UX</strong></td>
+                            <td>Diseño Apple-style, Prototipado interactivo, Identidad Visual (Dark Luxury), Mega Menú.</td>
+                            <td style="text-align: right; font-weight: 700;">$ 2.800.000</td>
+                            <td class="item-action">
+                                <label class="switch">
+                                    <input type="checkbox" class="price-calc" data-val="2800000" checked disabled>
+                                    <span class="slider"></span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fase 2: Desarrollo & Filtros AJAX</strong></td>
+                            <td>Codificación personalizada Liquid, Motor de búsqueda predictivo, Taxonomías complejas.</td>
+                            <td style="text-align: right; font-weight: 700;">$ 3.500.000</td>
+                            <td class="item-action">
+                                <label class="switch">
+                                    <input type="checkbox" class="price-calc" data-val="3500000" checked disabled>
+                                    <span class="slider"></span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fase 3: Módulo Decants & Logic</strong></td>
+                            <td>Variables dinámicas, Sincronización de inventario mililitro/botella, PDP avanzada.</td>
+                            <td style="text-align: right; font-weight: 700;">$ 3.800.000</td>
+                            <td class="item-action">
+                                <label class="switch">
+                                    <input type="checkbox" class="price-calc" data-val="3800000" checked disabled>
+                                    <span class="slider"></span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fase 4: Infraestructura & Checkout</strong></td>
+                            <td>Dominios .com/.co, SSL, Pasarelas (Wompi/PayU), SEO Técnico & Recuperación de Carritos.</td>
+                            <td style="text-align: right; font-weight: 700;">$ 1.900.000</td>
+                            <td class="item-action">
+                                <label class="switch">
+                                    <input type="checkbox" class="price-calc" data-val="1900000" checked disabled>
+                                    <span class="slider"></span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr style="background: rgba(0, 113, 227, 0.05);">
+                            <td class="accent-blue"><strong>Opcional: Asistente WhatsApp IA</strong></td>
+                            <td>Bot con segmentación inteligente y pre-asesoría olfativa automatizada.</td>
+                            <td style="text-align: right; font-weight: 700;">$ 800.000</td>
+                            <td class="item-action">
+                                <label class="switch">
+                                    <input type="checkbox" class="price-calc" data-val="800000">
+                                    <span class="slider"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <div class="pricing-container reveal">
-                <div class="price-row price-header">
-                    <div>Fases de Arquitectura y Desarrollo</div>
-                    <div style="text-align: right;">Inversión (COP)</div>
-                    <div style="text-align: right;"><i class="fa-solid fa-lock" style="margin-right: 5px;"></i> Estado</div>
+                <div class="total-section">
+                    <div class="payment-plan">
+                        <h4 style="margin-bottom: 1.8rem; color: var(--apple-blue); letter-spacing: 0.1em; font-size: 0.9rem;">MÉTODO DE PAGO Y TIEMPOS</h4>
+                        <div class="payment-step">
+                            <div class="step-circle">1</div>
+                            <span><strong>50%</strong> para inicio oficial y reserva de desarrollo (Fases 1 y 2).</span>
+                        </div>
+                        <div class="payment-step">
+                            <div class="step-circle">2</div>
+                            <span><strong>30%</strong> tras aprobación de Beta Funcional (Fase 3).</span>
+                        </div>
+                        <div class="payment-step">
+                            <div class="step-circle">3</div>
+                            <span><strong>20%</strong> contra entrega final y lanzamiento.</span>
+                        </div>
+                        <p style="margin-top: 1rem; color: var(--text-gray); font-size: 0.85rem;">* Tiempo estimado: 6 a 8 semanas llave en mano.</p>
+                    </div>
+                    <div class="total-box-final">
+                        <span style="color: var(--text-gray); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.15em;">Inversión Total Estimada</span>
+                        <div class="total-price-tag" id="total-display">$ 12.000.000</div>
+                        <p style="color: var(--text-gray); font-size: 0.85rem; margin-bottom: 2rem;">* Pesos Colombianos (COP).</p>
+                        <button class="btn btn-primary btn-gold" id="btn-accept" style="width: 100%; padding: 1.6rem;">
+                            <i class="fa-solid fa-file-contract" style="margin-right: 12px;"></i> ACEPTAR PROPUESTA DE DESARROLLO
+                        </button>
+                    </div>
                 </div>
-
-                <div class="price-row">
-                    <div class="item-info">
-                        <h4>Fase 1: Diseño UI/UX, Branding & Header Core</h4>
-                        <p>Creación de identidad visual Premium (Dark Luxury), adaptación Mobile-First, maquetación de la Página de Inicio y estructuración del Mega Menú con Buscador Predictivo.</p>
-                    </div>
-                    <div class="item-cost">$ 2.800.000</div>
-                    <div class="item-action">
-                        <label class="switch">
-                            <input type="checkbox" class="price-calc" data-val="2800000" checked disabled>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="price-row">
-                    <div class="item-info">
-                        <h4>Fase 2: Motor de Catálogo & Filtros AJAX</h4>
-                        <p>Implementación de base de datos para taxonomías (Climas, Tiempos de Uso) y programación del motor de filtros asíncronos para navegación sin recarga de página.</p>
-                    </div>
-                    <div class="item-cost">$ 3.500.000</div>
-                    <div class="item-action">
-                        <label class="switch">
-                            <input type="checkbox" class="price-calc" data-val="3500000" checked disabled>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="price-row">
-                    <div class="item-info">
-                        <h4>Fase 3: Páginas de Producto (PDP) & Lógica de Decants</h4>
-                        <p>Desarrollo de las fichas técnicas ("Acerca del Perfume"), galerías multimedia y selectores dinámicos para procesar inventarios y precios de botellas y múltiples tamaños de Decants.</p>
-                    </div>
-                    <div class="item-cost">$ 3.800.000</div>
-                    <div class="item-action">
-                        <label class="switch">
-                            <input type="checkbox" class="price-calc" data-val="3800000" checked disabled>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="price-row">
-                    <div class="item-info">
-                        <h4>Fase 4: Pasarelas, Retención & Footer</h4>
-                        <p>Integración de pagos (Wompi/MercadoPago/PayU) para Colombia, configuración de flujos automáticos para Recuperación de Carritos Abandonados y SEO Técnico.</p>
-                    </div>
-                    <div class="item-cost">$ 1.900.000</div>
-                    <div class="item-action">
-                        <label class="switch">
-                            <input type="checkbox" class="price-calc" data-val="1900000" checked disabled>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="price-row" style="background: rgba(255,255,255,0.01);">
-                    <div class="item-info">
-                        <h4 style="color: var(--gold-light);">Opcional: Asistente WhatsApp Inteligente</h4>
-                        <p>Botón flotante en toda la tienda que pre-segmenta la duda del cliente (Envíos, Asesoría Olfativa, Mayoristas) antes de enviarlo a su número de WhatsApp corporativo.</p>
-                    </div>
-                    <div class="item-cost">$ 800.000</div>
-                    <div class="item-action">
-                        <label class="switch">
-                            <input type="checkbox" class="price-calc" data-val="800000">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="total-row">
-                    <div class="total-label">Inversión Estimada:</div>
-                    <div class="total-amount" id="total-display">$ 12.000.000 COP</div>
-                </div>
-            </div>
-
-            <div class="text-center reveal" style="margin-top: 4rem;">
-                <button id="btn-accept" class="btn-primary" style="font-size: 1.2rem; padding: 1.5rem 4rem; width: 100%; max-width: 500px;">
-                    <i class="fa-solid fa-signature" style="margin-right: 10px;"></i> Aceptar Propuesta de Desarrollo
-                </button>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1.5rem;">* Tiempo estimado de entrega "Llave en Mano": 6 a 8 semanas.</p>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="logo" style="font-size: 1.5rem; margin-bottom: 10px;">ALTA<span>57</span></div>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">Agencia de Desarrollo Web E-Commerce y Experiencia Digital (UX/UI).</p>
-        <p style="color: #444; font-size: 0.8rem; margin-top: 2rem;">&copy; 2026. Documento estrictamente confidencial elaborado exclusivamente para Nidia Perfumes.</p>
+    <footer class="footer-cta">
+        <div class="container">
+            <div class="logo" style="justify-content: center; font-size: 1.8rem; margin-bottom: 2rem;"><i class="fa-solid fa-crown"></i> ALTA 57</div>
+            <p style="color: var(--text-gray); max-width: 650px; margin: 0 auto; line-height: 1.8; font-size: 1.1rem;">Construimos infraestructuras digitales que elevan marcas al estándar de exclusividad mundial.</p>
+            <div style="margin-top: 4rem; font-size: 0.85rem; color: #555; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 3rem;">
+                © 2025 ALTA 57 DIGITAL STUDIO. DOCUMENTO CONFIDENCIAL ELABORADO PARA NIDIA PERFUMES.
+            </div>
+        </div>
     </footer>
 
     <script>
-        // 1. Animaciones al hacer Scroll (Intersection Observer)
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
-        const observer = new IntersectionObserver((entries, observer) => {
+        // Reveal Logic (Intersection Observer)
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
-        
+        }, { threshold: 0.1 });
+
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        
-        // Cargar animaciones del Hero al inicio
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('active'));
+
+        // Swiper Initialization
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1.2,
+            spaceBetween: 25,
+            breakpoints: {
+                640: { slidesPerView: 2.5 },
+                1024: { slidesPerView: 4.5 }
+            }
         });
 
-        // 2. Calculadora Dinámica de Precios
+        // Mock Data for Categories & Products
+        const products = {
+            'Nicho': [
+                { name: 'Aventus', brand: 'Creed', price: '$1.250.000', tag: 'BEST' },
+                { name: 'Baccarat Rouge 540', brand: 'MFK', price: '$1.400.000', tag: 'LUXE' },
+                { name: 'Layton', brand: 'Parfums de Marly', price: '$1.100.000' },
+                { name: 'Naxos 1861', brand: 'Xerjoff', price: '$1.350.000', tag: 'TOP' }
+            ],
+            'Diseñador': [
+                { name: 'Sauvage Elixir', brand: 'Dior', price: '$850.000' },
+                { name: 'Bleu de Chanel', brand: 'Chanel', price: '$720.000' },
+                { name: 'Eros Flame', brand: 'Versace', price: '$450.000', tag: 'SALE' },
+                { name: 'Y Le Parfum', brand: 'YSL', price: '$680.000' }
+            ],
+            'Decants': [
+                { name: 'Aventus 10ml', brand: 'Creed', price: '$120.000', tag: 'POPULAR' },
+                { name: 'Side Effect 5ml', brand: 'Initio', price: '$85.000' },
+                { name: 'Tobacco Vanille 10ml', brand: 'Tom Ford', price: '$140.000' },
+                { name: 'Viking 5ml', brand: 'Creed', price: '$75.000' }
+            ],
+            'Caballeros': [
+                { name: 'Stronger with You', brand: 'Armani', price: '$490.000' },
+                { name: 'The One', brand: 'D&G', price: '$460.000' },
+                { name: 'Gentleman Reserve', brand: 'Givenchy', price: '$580.000', tag: 'NEW' },
+                { name: 'Terre d\'Hermes', brand: 'Hermes', price: '$520.000' }
+            ],
+            'Damas': [
+                { name: 'Libre Intense', brand: 'YSL', price: '$620.000' },
+                { name: 'Good Girl', brand: 'CH', price: '$580.000', tag: 'BEST' },
+                { name: 'La Vie Est Belle', brand: 'Lancome', price: '$540.000' },
+                { name: 'Delina Exclusif', brand: 'PdM', price: '$1.300.000' }
+            ]
+        };
+
+        function updateCategory(cat) {
+            const display = document.getElementById('product-display');
+            display.style.opacity = '0';
+            display.style.transform = 'translateY(10px)';
+
+            document.querySelectorAll('.category-card-slide').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            setTimeout(() => {
+                display.innerHTML = products[cat].map(p => `
+                    <div class="product-card">
+                        ${p.tag ? `<div class="badge-tag">${p.tag}</div>` : ''}
+                        <div class="product-img-placeholder"><i class="fa-solid fa-bottle-droplet"></i></div>
+                        <h4 style="font-size:0.85rem; color:var(--text-gray); text-transform: uppercase; letter-spacing: 0.1em;">${p.brand}</h4>
+                        <h4>${p.name}</h4>
+                        <div class="price">${p.price}</div>
+                    </div>
+                `).join('');
+                display.style.opacity = '1';
+                display.style.transform = 'translateY(0)';
+            }, 400);
+        }
+
+        // Search Simulation
+        const searchInput = document.getElementById('real-time-search');
+        searchInput.addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            const preview = document.getElementById('search-preview');
+            if(val.length > 2) {
+                preview.innerHTML = `
+                    <div class="glass-card" style="padding: 1.2rem; background: #252527; display: flex; align-items: center; gap: 1.2rem; border-color: var(--apple-blue);">
+                        <div style="width: 45px; height: 45px; background: #2d2d2f; border-radius: 10px; display:flex; align-items:center; justify-content:center; border: 1px solid rgba(255,255,255,0.1);"><i class="fa-solid fa-bolt accent-blue"></i></div>
+                        <div>
+                            <span style="display:block; font-weight: 600; font-size: 1rem;">Resultado para: "${val}"</span>
+                            <span style="font-size: 0.85rem; color: var(--text-gray);">Mostrando sugerencias inteligentes...</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                preview.innerHTML = '<p style="color: var(--text-gray); font-size: 0.95rem;">Simulación: Escribe "Creed" o "Vainilla"...</p>';
+            }
+        });
+
+        // Decant Logic
+        function setDecant(el, price) {
+            document.querySelectorAll('.decant-option').forEach(opt => opt.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('dynamic-price').innerText = price;
+        }
+
+        // Price Calculator
         const checkboxes = document.querySelectorAll('.price-calc');
         const totalDisplay = document.getElementById('total-display');
         
@@ -490,43 +819,34 @@
                     total += parseInt(cb.getAttribute('data-val'));
                 }
             });
-            totalDisplay.textContent = '$ ' + formatMoney(total) + ' COP';
-            
-            // Micro-interacción: Pequeño salto al cambiar el precio
-            totalDisplay.style.transform = 'scale(1.05)';
-            setTimeout(() => totalDisplay.style.transform = 'scale(1)', 200);
+            totalDisplay.textContent = '$ ' + formatMoney(total);
         };
 
         checkboxes.forEach(cb => {
-            if(!cb.disabled) {
-                cb.addEventListener('change', calculateTotal);
-            }
+            cb.addEventListener('change', calculateTotal);
         });
-        calculateTotal();
 
-        // 3. Gatillo Psicológico de Cierre (Botón de Aceptar + Confeti)
+        // Accept Proposal Logic
         document.getElementById('btn-accept').addEventListener('click', function() {
-            // Generar Confeti Dorado y Blanco
-            var duration = 3 * 1000;
-            var end = Date.now() + duration;
-
-            (function frame() {
-                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#D4AF37', '#ffffff', '#AA8529'] });
-                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#D4AF37', '#ffffff', '#AA8529'] });
-                if (Date.now() < end) { requestAnimationFrame(frame); }
-            }());
-
-            // Cambiar estado del botón
-            this.innerHTML = '<i class="fa-solid fa-check-double"></i> ¡PROYECTO APROBADO!';
-            this.style.background = '#ffffff';
-            this.style.color = '#000000';
-            this.style.pointerEvents = 'none';
-            this.style.transform = 'scale(1.05)';
+            confetti({
+                particleCount: 300,
+                spread: 120,
+                origin: { y: 0.6 },
+                colors: ['#0071e3', '#d4af37', '#ffffff', '#AA8529']
+            });
+            this.innerHTML = "¡PROYECTO ACEPTADO!";
+            this.style.background = "#fff";
+            this.style.color = "#000";
+            this.style.pointerEvents = "none";
             
             setTimeout(() => {
-                alert("¡Felicidades por esta gran decisión!\n\nEl equipo de Alta 57 ha sido notificado. Nos pondremos en contacto con Nidia Perfumes a la mayor brevedad para formalizar la Fase 1.");
-            }, 1200);
+                alert("¡Felicidades Nidia Perfumes! Alta 57 ha recibido su aprobación. Estamos listos para comenzar con la Fase 1: Estrategia y UI/UX.");
+            }, 800);
         });
+
+        // Init
+        updateCategory('Nicho');
+        calculateTotal();
     </script>
 </body>
 </html>
