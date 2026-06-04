@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Arquitectura E-Commerce | Alta 57 para Nidia Perfumes</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ================= VARIABLES DE LUJO ================= */
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F3E5AB;
+            --gold-dark: #AA8529;
+            --bg-base: #050505;
+            --bg-card: #111111;
+            --bg-card-hover: #161616;
+            --text-main: #EAEAEA;
+            --text-muted: #9CA3AF;
+            --border-glow: rgba(212, 175, 55, 0.2);
+            --font-heading: 'Cinzel', serif;
+            --font-body: 'Montserrat', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* ================= RESET Y BASE ================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5 { font-family: var(--font-heading); font-weight: 600; }
+        .text-gold {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+        section { padding: 6rem 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-size: 2.8rem; margin-bottom: 1rem; color: #fff; }
+        .section-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
+
+        /* ================= HEADER / NAVEGACIÓN ================= */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-glow); padding: 1rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-family: var(--font-heading); font-size: 1.8rem; letter-spacing: 2px; color: var(--gold); }
+        .logo span { color: #fff; }
+        .client-badge {
+            border: 1px solid var(--gold); padding: 0.4rem 1.2rem; border-radius: 50px;
+            font-size: 0.8rem; letter-spacing: 1px; color: var(--gold-light); text-transform: uppercase;
+        }
+
+        /* ================= HERO ================= */
+        .hero {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; position: relative;
+            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.1) 0%, rgba(5,5,5,1) 80%),
+                        url('https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=2000&auto=format&fit=crop') center/cover;
+            background-attachment: fixed;
+        }
+        .hero h1 { font-size: 4.5rem; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: 1px; }
+        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 800px; margin-bottom: 3rem; }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #000;
+            padding: 1.2rem 3rem; font-family: var(--font-heading); font-weight: 700; font-size: 1.1rem;
+            border: none; border-radius: 3px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+            text-decoration: none; transition: var(--transition); box-shadow: 0 10px 30px rgba(212,175,55,0.2);
+            display: inline-block;
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(212,175,55,0.4); color: #000; }
+
+        /* ================= ANÁLISIS COMPETITIVO ================= */
+        .audit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .audit-card {
+            background: var(--bg-card); border: 1px solid var(--border-glow); padding: 3rem;
+            border-radius: 8px; position: relative; overflow: hidden;
+        }
+        .audit-card::before { content: ''; position: absolute; left: 0; top: 0; width: 3px; height: 100%; background: var(--gold); }
+        .audit-card h3 { font-size: 1.6rem; margin-bottom: 1rem; color: #fff; }
+        .list-features { list-style: none; margin-top: 1.5rem; }
+        .list-features li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1rem; color: var(--text-muted); }
+        .list-features i { color: var(--gold); margin-top: 5px; font-size: 0.9rem; }
+
+        /* ================= ARQUITECTURA / ECOSISTEMA ================= */
+        .arch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .arch-item {
+            background: var(--bg-card); padding: 2.5rem; border-radius: 8px; border: 1px solid transparent;
+            transition: var(--transition); text-align: center;
+        }
+        .arch-item:hover { border-color: var(--gold); transform: translateY(-5px); background: var(--bg-card-hover); }
+        .arch-item i { font-size: 2.5rem; color: var(--gold); margin-bottom: 1.5rem; }
+        .arch-item h4 { font-size: 1.3rem; margin-bottom: 1rem; color: #fff; }
+        .arch-item p { font-size: 0.95rem; color: var(--text-muted); }
+
+        /* ================= FILTROS AVANZADOS ================= */
+        .tags-wrapper { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 3rem; }
+        .tag {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-main); padding: 0.6rem 1.5rem; border-radius: 50px; font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .tag:hover { background: rgba(212, 175, 55, 0.1); border-color: var(--gold); color: var(--gold-light); }
+        .tag-special { border-color: var(--gold); color: var(--gold-light); background: rgba(212, 175, 55, 0.05); }
+
+        /* ================= DEMO: PÁGINA DE PRODUCTO ================= */
+        .pdp-demo {
+            background: #080808; border: 1px solid var(--border-glow); border-radius: 12px;
+            padding: 3rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative;
+        }
+        .pdp-badge {
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            background: var(--gold); color: #000; padding: 5px 20px; font-size: 0.8rem;
+            font-family: var(--font-heading); font-weight: 700; letter-spacing: 2px; border-radius: 3px;
+        }
+        
+        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+        .spec-row { display: flex; flex-direction: column; background: var(--bg-card); padding: 1rem 1.5rem; border-left: 2px solid var(--gold); }
+        .spec-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 4px; }
+        .spec-value { font-size: 1.1rem; color: #fff; font-weight: 500; }
+
+        .pyramid-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center; }
+        .pyramid-box { background: #111; border: 1px dashed var(--border-glow); padding: 1.5rem; border-radius: 6px; }
+        .pyramid-box i { color: var(--text-muted); margin-bottom: 10px; font-size: 1.2rem; }
+
+        /* ================= TABLA DINÁMICA DE INVERSIÓN ================= */
+        .pricing-container { background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-glow); overflow: hidden; }
+        .price-row {
+            display: grid; grid-template-columns: 3fr 1fr 1fr; padding: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05); align-items: center; transition: var(--transition);
+        }
+        .price-row:hover { background: rgba(255,255,255,0.02); }
+        .price-header { background: #0a0a0a; font-family: var(--font-heading); color: var(--gold); border-bottom: 1px solid var(--gold); }
+        
+        .item-info h4 { font-size: 1.2rem; color: #fff; margin-bottom: 5px; }
+        .item-info p { font-size: 0.9rem; color: var(--text-muted); }
+        .item-cost { font-family: var(--font-body); font-weight: 600; font-size: 1.2rem; color: var(--gold-light); text-align: right; }
+        .item-action { text-align: right; }
+
+        /* Switch Checkbox */
+        .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--gold); }
+        input:checked + .slider:before { transform: translateX(22px); }
+        input:disabled + .slider { opacity: 0.5; cursor: not-allowed; }
+
+        .total-row { background: rgba(212, 175, 55, 0.05); padding: 3rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .total-label { font-family: var(--font-heading); font-size: 1.8rem; color: #fff; }
+        .total-amount { font-family: var(--font-heading); font-size: 3rem; color: var(--gold); font-weight: 700; transition: transform 0.3s; }
+
+        /* ================= ANIMACIONES SCROLL ================= */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* ================= FOOTER ================= */
+        footer { background: #000; padding: 4rem 5%; text-align: center; border-top: 1px solid var(--border-glow); }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .audit-grid, .specs-grid, .pyramid-grid { grid-template-columns: 1fr; }
+            .price-row { grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem; }
+            .item-cost, .item-action { text-align: left; }
+            .total-row { flex-direction: column; text-align: left; gap: 1rem; align-items: flex-start; }
+            .total-amount { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">ALTA<span>57</span></div>
+        <div class="client-badge"><i class="fa-solid fa-crown" style="margin-right: 5px;"></i> Para Nidia Perfumes</div>
+    </nav>
+
+    <header class="hero">
+        <div class="container reveal">
+            <h4 class="text-gold" style="font-family: var(--font-body); letter-spacing: 4px; margin-bottom: 1rem; font-size: 0.9rem;">Propuesta de Desarrollo E-Commerce</h4>
+            <h1>El Lujo Hecho Código</h1>
+            <p>Una arquitectura tecnológica diseñada no solo para vender fragancias, sino para transmitir exclusividad, dominar el mercado colombiano y generar una experiencia inmersiva que convierta visitantes en coleccionistas.</p>
+            <a href="#auditoria" class="btn-primary mt-4">Descubrir la Estrategia</a>
+        </div>
+    </header>
+
+    <section id="auditoria">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="text-gold">Auditoría Competitiva</h2>
+                <p>Análisis técnico del referente del mercado y nuestra ruta para superarlo tecnológicamente.</p>
+            </div>
+
+            <div class="audit-grid reveal">
+                <div>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: #fff;">El Escenario Actual: <span style="font-family: var(--font-body); font-weight: 300;">disfragancias.com</span></h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Hemos desglosado su arquitectura. Poseen un catálogo robusto, menús extensos y variables de decants funcionales. Sin embargo, su infraestructura (presumiblemente basada en constructores tradicionales) presenta <strong>fricciones de conversión</strong>:</p>
+                    <ul class="list-features">
+                        <li><i class="fa-solid fa-xmark" style="color: #ef4444;"></i> Recargas completas de página al usar filtros, rompiendo la atención del usuario.</li>
+                        <li><i class="fa-solid fa-xmark" style="color: #ef4444;"></i> Experiencia móvil saturada al elegir múltiples variaciones de un perfume.</li>
+                        <li><i class="fa-solid fa-xmark" style="color: #ef4444;"></i> Diseño gráfico estándar que no evoca la sensación de "Alta Perfumería".</li>
+                    </ul>
+                </div>
+                <div class="audit-card">
+                    <h3 class="text-gold">La Solución Alta 57</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Desarrollaremos una plataforma superior con arquitectura moderna garantizando retención psicológica y velocidad.</p>
+                    <ul class="list-features">
+                        <li><i class="fa-solid fa-bolt"></i> <strong>Filtros AJAX Inmediatos:</strong> Búsqueda en milisegundos sin recargar la web.</li>
+                        <li><i class="fa-solid fa-mobile-screen"></i> <strong>UI/UX Mobile-First:</strong> Selectores de "Decants" elegantes y fluidos en celulares.</li>
+                        <li><i class="fa-solid fa-envelope-open-text"></i> <strong>Recuperación de Carritos:</strong> Automatización agresiva para rescatar ventas perdidas.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-card">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="text-gold">Anatomía del Proyecto</h2>
+                <p>Construiremos un ecosistema digital completo, optimizado desde el encabezado hasta el pie de página.</p>
+            </div>
+
+            <div class="arch-grid reveal">
+                <div class="arch-item">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                    <h4>1. Mega Menú Inteligente</h4>
+                    <p>Navegación jerárquica por marcas y categorías con un <strong>Buscador Predictivo</strong> que muestra imágenes del perfume antes de presionar enter.</p>
+                </div>
+                <div class="arch-item">
+                    <i class="fa-solid fa-gem"></i>
+                    <h4>2. Home (Hero & Categorías)</h4>
+                    <p>Diseño enfocado en el deseo visual. Sliders en alta resolución, grillas de "Más Vendidos" y accesos directos para la compra impulsiva.</p>
+                </div>
+                <div class="arch-item">
+                    <i class="fa-solid fa-vials"></i>
+                    <h4>3. Lógica de Variables (Decants)</h4>
+                    <p>Motor de e-commerce ajustado para separar la venta de la Botella Completa vs. Decants (Ej: 5ml, 10ml), sincronizando inventario y precio dinámicamente.</p>
+                </div>
+                <div class="arch-item">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <h4>4. Checkout & Footer</h4>
+                    <p>Cierre de confianza. Pasarelas de pago para Colombia, políticas de envío, sellos de originalidad y suscripción a newsletter estructurados en el pie de página.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container text-center">
+            <div class="section-header reveal">
+                <h2 class="text-gold">Motor de Filtros Avanzados</h2>
+                <p>El corazón de la conversión. Tus clientes cruzarán variables complejas al instante para encontrar su firma olfativa ideal.</p>
+            </div>
+
+            <div class="tags-wrapper reveal">
+                <span class="tag">Por Precio</span>
+                <span class="tag">Género</span>
+                <span class="tag">Categorías</span>
+                <span class="tag">Más Vendidas</span>
+                <span class="tag">Acordes Principales</span>
+                <span class="tag">Aromas</span>
+                <span class="tag">Climas</span>
+                <span class="tag">Marcas</span>
+                <span class="tag">Año de Lanzamiento</span>
+                <span class="tag">País</span>
+                <span class="tag">Perfumista</span>
+                <span class="tag">Tamaño</span>
+            </div>
+
+            <h4 class="mt-4 mb-3 text-gold reveal" style="font-family: var(--font-body); letter-spacing: 2px; margin-top: 3rem; margin-bottom: 1.5rem;">Filtro Especial Dinámico: "Mejor Tiempo de Uso"</h4>
+            <div class="tags-wrapper reveal">
+                <span class="tag tag-special"><i class="fa-solid fa-heart" style="margin-right: 5px;"></i> Citas</span>
+                <span class="tag tag-special"><i class="fa-solid fa-sun" style="margin-right: 5px;"></i> Día</span>
+                <span class="tag tag-special"><i class="fa-solid fa-graduation-cap" style="margin-right: 5px;"></i> Universidad</span>
+                <span class="tag tag-special"><i class="fa-solid fa-glass-cheers" style="margin-right: 5px;"></i> Fiesta</span>
+                <span class="tag tag-special"><i class="fa-solid fa-dumbbell" style="margin-right: 5px;"></i> Gym</span>
+                <span class="tag tag-special"><i class="fa-solid fa-moon" style="margin-right: 5px;"></i> Noche</span>
+                <span class="tag tag-special"><i class="fa-solid fa-star" style="margin-right: 5px;"></i> Ocasiones Especiales</span>
+                <span class="tag tag-special"><i class="fa-solid fa-briefcase" style="margin-right: 5px;"></i> Oficina</span>
+                <span class="tag tag-special"><i class="fa-solid fa-umbrella-beach" style="margin-right: 5px;"></i> Playa</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-card">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="text-gold">La Página de Producto (PDP)</h2>
+                <p>Las descripciones de texto aburridas no venden lujo. Crearemos <strong>Tarjetas Dinámicas</strong> integrando imágenes, videos y Preguntas Frecuentes. <br>Aquí una simulación real de cómo se verá la información técnica de sus fragancias:</p>
+            </div>
+
+            <div class="pdp-demo reveal">
+                <div class="pdp-badge">VISTA PREVIA DE INTERFAZ</div>
+                <h3 class="text-gold text-center" style="font-size: 2rem; margin-bottom: 2rem; margin-top: 1rem;">Acerca del Perfume</h3>
+                
+                <div class="specs-grid">
+                    <div class="spec-row"><span class="spec-label">Género</span><span class="spec-value">Masculino</span></div>
+                    <div class="spec-row"><span class="spec-label">Categoría de la marca</span><span class="spec-value">Diseñador</span></div>
+                    <div class="spec-row"><span class="spec-label">Clima Ideal</span><span class="spec-value">Invierno (Frío), Otoño (Templado, frío), Primavera (Templado, cálido)</span></div>
+                    <div class="spec-row"><span class="spec-label">Concentración</span><span class="spec-value">Eau de Parfum</span></div>
+                    <div class="spec-row"><span class="spec-label">Año de lanzamiento</span><span class="spec-value">2023</span></div>
+                    <div class="spec-row"><span class="spec-label">País de Origen</span><span class="spec-value">Italia</span></div>
+                    <div class="spec-row" style="grid-column: 1 / -1; text-align: center; background: rgba(212, 175, 55, 0.05); border: 1px solid var(--border-glow);">
+                        <span class="spec-label">Acordes principales</span>
+                        <span class="spec-value text-gold" style="font-size: 1.3rem;">Avainillado, Lavanda, Aromático, Amaderado, Dulce</span>
+                    </div>
+                </div>
+
+                <div class="pyramid-grid">
+                    <div class="pyramid-box">
+                        <i class="fa-solid fa-wind"></i>
+                        <span class="spec-label" style="display: block;">Notas de Salida</span>
+                        <span class="spec-value text-gold">Vainilla</span>
+                    </div>
+                    <div class="pyramid-box">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                        <span class="spec-label" style="display: block;">Notas de Corazón</span>
+                        <span class="spec-value text-gold">Lavanda</span>
+                    </div>
+                    <div class="pyramid-box">
+                        <i class="fa-solid fa-leaf"></i>
+                        <span class="spec-label" style="display: block;">Notas de Base</span>
+                        <span class="spec-value text-gold">Vetiver</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="inversion">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="text-gold">Plan de Inversión Tecnológica</h2>
+                <p>Presupuesto estructurado por fases metodológicas. Active los módulos adicionales para visualizar su inversión total en Pesos Colombianos (COP).</p>
+            </div>
+
+            <div class="pricing-container reveal">
+                <div class="price-row price-header">
+                    <div>Fases de Arquitectura y Desarrollo</div>
+                    <div style="text-align: right;">Inversión (COP)</div>
+                    <div style="text-align: right;"><i class="fa-solid fa-lock" style="margin-right: 5px;"></i> Estado</div>
+                </div>
+
+                <div class="price-row">
+                    <div class="item-info">
+                        <h4>Fase 1: Diseño UI/UX, Branding & Header Core</h4>
+                        <p>Creación de identidad visual Premium (Dark Luxury), adaptación Mobile-First, maquetación de la Página de Inicio y estructuración del Mega Menú con Buscador Predictivo.</p>
+                    </div>
+                    <div class="item-cost">$ 2.800.000</div>
+                    <div class="item-action">
+                        <label class="switch">
+                            <input type="checkbox" class="price-calc" data-val="2800000" checked disabled>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="price-row">
+                    <div class="item-info">
+                        <h4>Fase 2: Motor de Catálogo & Filtros AJAX</h4>
+                        <p>Implementación de base de datos para taxonomías (Climas, Tiempos de Uso) y programación del motor de filtros asíncronos para navegación sin recarga de página.</p>
+                    </div>
+                    <div class="item-cost">$ 3.500.000</div>
+                    <div class="item-action">
+                        <label class="switch">
+                            <input type="checkbox" class="price-calc" data-val="3500000" checked disabled>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="price-row">
+                    <div class="item-info">
+                        <h4>Fase 3: Páginas de Producto (PDP) & Lógica de Decants</h4>
+                        <p>Desarrollo de las fichas técnicas ("Acerca del Perfume"), galerías multimedia y selectores dinámicos para procesar inventarios y precios de botellas y múltiples tamaños de Decants.</p>
+                    </div>
+                    <div class="item-cost">$ 3.800.000</div>
+                    <div class="item-action">
+                        <label class="switch">
+                            <input type="checkbox" class="price-calc" data-val="3800000" checked disabled>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="price-row">
+                    <div class="item-info">
+                        <h4>Fase 4: Pasarelas, Retención & Footer</h4>
+                        <p>Integración de pagos (Wompi/MercadoPago/PayU) para Colombia, configuración de flujos automáticos para Recuperación de Carritos Abandonados y SEO Técnico.</p>
+                    </div>
+                    <div class="item-cost">$ 1.900.000</div>
+                    <div class="item-action">
+                        <label class="switch">
+                            <input type="checkbox" class="price-calc" data-val="1900000" checked disabled>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="price-row" style="background: rgba(255,255,255,0.01);">
+                    <div class="item-info">
+                        <h4 style="color: var(--gold-light);">Opcional: Asistente WhatsApp Inteligente</h4>
+                        <p>Botón flotante en toda la tienda que pre-segmenta la duda del cliente (Envíos, Asesoría Olfativa, Mayoristas) antes de enviarlo a su número de WhatsApp corporativo.</p>
+                    </div>
+                    <div class="item-cost">$ 800.000</div>
+                    <div class="item-action">
+                        <label class="switch">
+                            <input type="checkbox" class="price-calc" data-val="800000">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="total-row">
+                    <div class="total-label">Inversión Estimada:</div>
+                    <div class="total-amount" id="total-display">$ 12.000.000 COP</div>
+                </div>
+            </div>
+
+            <div class="text-center reveal" style="margin-top: 4rem;">
+                <button id="btn-accept" class="btn-primary" style="font-size: 1.2rem; padding: 1.5rem 4rem; width: 100%; max-width: 500px;">
+                    <i class="fa-solid fa-signature" style="margin-right: 10px;"></i> Aceptar Propuesta de Desarrollo
+                </button>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1.5rem;">* Tiempo estimado de entrega "Llave en Mano": 6 a 8 semanas.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo" style="font-size: 1.5rem; margin-bottom: 10px;">ALTA<span>57</span></div>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Agencia de Desarrollo Web E-Commerce y Experiencia Digital (UX/UI).</p>
+        <p style="color: #444; font-size: 0.8rem; margin-top: 2rem;">&copy; 2026. Documento estrictamente confidencial elaborado exclusivamente para Nidia Perfumes.</p>
+    </footer>
+
+    <script>
+        // 1. Animaciones al hacer Scroll (Intersection Observer)
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        
+        // Cargar animaciones del Hero al inicio
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('active'));
+        });
+
+        // 2. Calculadora Dinámica de Precios
+        const checkboxes = document.querySelectorAll('.price-calc');
+        const totalDisplay = document.getElementById('total-display');
+        
+        const formatMoney = (amount) => {
+            return new Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                minimumFractionDigits: 0
+            }).format(amount).replace(/\s/g, ''); 
+        };
+
+        const calculateTotal = () => {
+            let total = 0;
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    total += parseInt(cb.getAttribute('data-val'));
+                }
+            });
+            totalDisplay.textContent = '$ ' + formatMoney(total) + ' COP';
+            
+            // Micro-interacción: Pequeño salto al cambiar el precio
+            totalDisplay.style.transform = 'scale(1.05)';
+            setTimeout(() => totalDisplay.style.transform = 'scale(1)', 200);
+        };
+
+        checkboxes.forEach(cb => {
+            if(!cb.disabled) {
+                cb.addEventListener('change', calculateTotal);
+            }
+        });
+        calculateTotal();
+
+        // 3. Gatillo Psicológico de Cierre (Botón de Aceptar + Confeti)
+        document.getElementById('btn-accept').addEventListener('click', function() {
+            // Generar Confeti Dorado y Blanco
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#D4AF37', '#ffffff', '#AA8529'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#D4AF37', '#ffffff', '#AA8529'] });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+
+            // Cambiar estado del botón
+            this.innerHTML = '<i class="fa-solid fa-check-double"></i> ¡PROYECTO APROBADO!';
+            this.style.background = '#ffffff';
+            this.style.color = '#000000';
+            this.style.pointerEvents = 'none';
+            this.style.transform = 'scale(1.05)';
+            
+            setTimeout(() => {
+                alert("¡Felicidades por esta gran decisión!\n\nEl equipo de Alta 57 ha sido notificado. Nos pondremos en contacto con Nidia Perfumes a la mayor brevedad para formalizar la Fase 1.");
+            }, 1200);
+        });
+    </script>
+</body>
+</html>
