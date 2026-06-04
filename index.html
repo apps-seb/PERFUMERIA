@@ -2,248 +2,577 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arquitectura Digital E-Commerce | Alta 57 para Nidia Perfumes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nidia Perfumes | Arquitectura de Alta Perfumería | Propuesta por Alta 57</title>
     
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Animation & Effects -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* ================= APPLE DESIGN SYSTEM ================= */
+        /* ================= APPLE iOS 26 DESIGN SYSTEM (Glassmorphism) ================= */
         :root {
             --bg-pure: #000000;
             --bg-elevated: #0a0a0c;
-            --bg-panel: #121214;
+            --bg-panel: rgba(18, 18, 20, 0.98);
             --text-main: #f5f5f7;
             --text-muted: #86868b;
             
-            --apple-blue: #0A84FF;
-            --apple-blue-glow: rgba(10, 132, 255, 0.15);
+            --apple-blue: #0071e3;
+            --apple-blue-glow: rgba(0, 113, 227, 0.4);
+
             --gold: #D4AF37;
             --gold-light: #F3E5AB;
-            --gold-glow: rgba(212, 175, 55, 0.15);
+            --gold-glow: rgba(212, 175, 55, 0.3);
             
-            --glass-bg: rgba(255, 255, 255, 0.02);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-card-bg: rgba(255, 255, 255, 0.03);
             
             --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            --radius-xl: 32px;
+            --radius-l: 24px;
+            --radius-m: 16px;
         }
 
-        /* ================= RESET Y BASE ================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { font-family: var(--font-main); background-color: var(--bg-pure); color: var(--text-main); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
 
-        h1, h2, h3, h4, h5 { font-weight: 600; letter-spacing: -0.02em; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-pure);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5 { font-weight: 700; letter-spacing: -0.03em; }
         .text-gradient-blue { background: linear-gradient(135deg, #5AC8FA, var(--apple-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .text-gradient-gold { background: linear-gradient(135deg, #F3E5AB, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        .container { max-width: 1250px; margin: 0 auto; padding: 0 5%; }
-        section { padding: 7rem 0; position: relative; border-bottom: 1px solid var(--glass-border); }
+
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 6%; }
+        section { padding: 80px 0; border-bottom: 1px solid var(--glass-border); }
         .bg-elevated { background-color: var(--bg-elevated); }
-        
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-header h2 { font-size: 3.2rem; margin-bottom: 1rem; color: var(--text-main); line-height: 1.1; }
-        .section-header p { color: var(--text-muted); font-size: 1.15rem; max-width: 800px; margin: 0 auto; font-weight: 400; }
 
-        /* ================= GLASSMORPHISM ================= */
-        .glass-card { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 3rem; transition: var(--transition); }
-        .glass-card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        
-        .btn { padding: 1.2rem 2.5rem; font-size: 1.05rem; font-weight: 500; border-radius: 50px; cursor: pointer; text-decoration: none; transition: var(--transition); border: none; display: inline-flex; align-items: center; justify-content: center; gap: 10px; }
-        .btn-blue { background: var(--apple-blue); color: #fff; }
-        .btn-blue:hover { background: #0071E3; box-shadow: 0 10px 30px var(--apple-blue-glow); transform: scale(1.02); }
-        .btn-gold { background: linear-gradient(135deg, var(--gold), #AA8529); color: #000; font-weight: 600; }
-        .btn-gold:hover { box-shadow: 0 10px 30px var(--gold-glow); transform: scale(1.02); color: #000; }
-        .btn-outline { background: transparent; border: 1px solid var(--glass-border); color: var(--text-main); }
-        .btn-outline:hover { border-color: var(--text-muted); background: rgba(255,255,255,0.05); }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header h2 { font-size: 3rem; margin-bottom: 15px; }
+        .section-header p { color: var(--text-muted); font-size: 1.2rem; max-width: 800px; margin: 0 auto; }
 
-        /* ================= NAVEGACIÓN ================= */
-        nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(0, 0, 0, 0.75); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--glass-border); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.3rem; font-weight: 700; letter-spacing: 1px; color: var(--text-main); }
-        .badge-nav { font-size: 0.8rem; color: var(--gold); border: 1px solid var(--gold); padding: 4px 15px; border-radius: 20px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
-
-        /* ================= HERO ================= */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; background: radial-gradient(circle at 50% 0%, var(--apple-blue-glow) 0%, transparent 60%); }
-        .hero h1 { font-size: 5.5rem; line-height: 1.05; margin-bottom: 1.5rem; letter-spacing: -0.04em; }
-
-        /* ================= GRIDS & LISTAS ================= */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-        .list-clean { list-style: none; margin-top: 1.5rem; }
-        .list-clean li { margin-bottom: 1.5rem; display: flex; align-items: flex-start; gap: 15px; color: var(--text-muted); font-size: 0.95rem; }
-        .list-clean i { margin-top: 4px; font-size: 1.2rem; }
-        .list-clean h4 { color: #fff; margin-bottom: 4px; font-size: 1.1rem; }
-
-        /* ================= MOCKUPS UI/UX (CÓDIGO PURO HTML/CSS) ================= */
-        .ui-window { background: var(--bg-panel); border: 1px solid var(--glass-border); border-radius: 16px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.8); margin-bottom: 4rem; }
-        .ui-header { background: rgba(255,255,255,0.02); padding: 12px 20px; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-muted); font-family: monospace; }
-        .mac-dot { width: 10px; height: 10px; border-radius: 50%; background: #444; }
-        .mac-dot:nth-child(1) { background: #ff5f56; } .mac-dot:nth-child(2) { background: #ffbd2e; } .mac-dot:nth-child(3) { background: #27c93f; }
-
-        /* MÓDULO 1: Categorías (Slider) */
-        .cat-slider { display: flex; gap: 15px; overflow-x: auto; padding: 3rem; scrollbar-width: none; }
-        .cat-slider::-webkit-scrollbar { display: none; }
-        .cat-card { min-width: 170px; height: 160px; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; transition: var(--transition); cursor: pointer; }
-        .cat-card:hover { border-color: var(--apple-blue); background: rgba(10, 132, 255, 0.05); transform: translateY(-5px); box-shadow: 0 10px 30px var(--apple-blue-glow); }
-        .cat-card i { font-size: 2.5rem; color: var(--text-muted); transition: var(--transition); }
-        .cat-card:hover i { color: var(--apple-blue); }
-        .cat-card span { font-weight: 500; font-size: 0.95rem; color: #fff; }
-
-        /* MÓDULO 2: Filtros Avanzados AJAX */
-        .filter-layout { display: grid; grid-template-columns: 320px 1fr; }
-        .filter-sidebar { background: rgba(0,0,0,0.4); border-right: 1px solid var(--glass-border); padding: 2rem; max-height: 700px; overflow-y: auto; }
-        .filter-sidebar::-webkit-scrollbar { width: 4px; }
-        .filter-sidebar::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        .filter-group { margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem; }
-        .filter-title { font-size: 0.85rem; color: #fff; font-weight: 600; text-transform: uppercase; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; letter-spacing: 1px; }
-        
-        .ui-checkbox { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; cursor: pointer; font-size: 0.85rem; color: var(--text-muted); transition: var(--transition); }
-        .ui-checkbox:hover { color: #fff; }
-        .ui-checkbox .box { width: 16px; height: 16px; border: 1px solid var(--glass-border); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
-        .ui-checkbox.active { color: var(--apple-blue); }
-        .ui-checkbox.active .box { background: var(--apple-blue); border-color: var(--apple-blue); }
-        .ui-checkbox.active .box::after { content: '\f00c'; font-family: "Font Awesome 6 Free"; font-weight: 900; color: #fff; font-size: 0.6rem; }
-        
-        .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
-        .ui-tag { padding: 8px 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 50px; font-size: 0.75rem; color: var(--text-muted); cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 6px; }
-        .ui-tag:hover { background: rgba(10, 132, 255, 0.1); border-color: var(--apple-blue); color: #fff; }
-        .ui-tag.active { background: rgba(212, 175, 55, 0.1); border-color: var(--gold); color: var(--gold); }
-
-        /* MÓDULO 3: Ficha de Producto y Decants */
-        .pdp-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; padding: 4rem; align-items: start; }
-        .pdp-img-sim { width: 100%; aspect-ratio: 1; background: radial-gradient(circle at center, #1a1a24 0%, #050505 100%); border: 1px dashed var(--glass-border); border-radius: 20px; display: flex; align-items: center; justify-content: center; }
-        
-        .pill-container { display: flex; background: rgba(0,0,0,0.5); padding: 5px; border-radius: 14px; margin: 1.5rem 0; border: 1px solid var(--glass-border); }
-        .pill-btn { flex: 1; text-align: center; padding: 14px; color: var(--text-muted); font-weight: 500; font-size: 0.95rem; cursor: pointer; border-radius: 10px; transition: var(--transition); }
-        .pill-btn.active { background: var(--apple-blue); color: #fff; box-shadow: 0 4px 15px var(--apple-blue-glow); }
-        .dynamic-price { font-size: 3rem; font-weight: 700; color: #fff; font-family: monospace; letter-spacing: -1px; transition: 0.3s; margin-bottom: 5px; line-height: 1; }
-
-        .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 2rem; }
-        .spec-item { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 10px; border-left: 2px solid var(--apple-blue); }
-        .spec-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; }
-        .spec-value { font-size: 0.95rem; color: #fff; font-weight: 500; }
-        .pyramid-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
-        .pyramid-box { background: rgba(0,0,0,0.3); border: 1px dashed var(--glass-border); border-radius: 10px; padding: 1.2rem 1rem; text-align: center; }
-
-        /* ================= COTIZACIÓN ================= */
-        .quote-table { width: 100%; border-collapse: collapse; background: var(--bg-panel); border-radius: 16px; overflow: hidden; border: 1px solid var(--glass-border); margin-bottom: 3rem; }
-        .quote-table th { background: #18181b; text-align: left; padding: 1.5rem; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--glass-border); }
-        .quote-table td { padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.03); vertical-align: top; }
-        .item-title { font-size: 1.15rem; color: #fff; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .item-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
-        .item-price { font-size: 1.15rem; color: var(--gold); font-weight: 600; font-family: monospace; white-space: nowrap; text-align: right; }
-
-        /* Switches Apple */
-        .switch { position: relative; display: inline-block; width: 46px; height: 26px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.1); transition: .4s; border-radius: 34px; border: 1px solid var(--glass-border); }
-        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 2px; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--apple-blue); border-color: var(--apple-blue); }
-        input:checked + .slider:before { transform: translateX(20px); }
-        input:disabled + .slider { opacity: 0.4; cursor: not-allowed; }
-
-        .total-box { background: rgba(10, 132, 255, 0.05); border: 1px solid var(--apple-blue-glow); padding: 3rem; border-radius: 24px; margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; }
-        .grand-total { font-size: 3.5rem; font-weight: 700; color: #fff; letter-spacing: -2px; }
-
-        /* ================= PLAN DE PAGOS ================= */
-        .payment-timeline { display: flex; justify-content: space-between; gap: 2rem; margin-top: 3rem; }
-        .payment-step { flex: 1; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2.5rem; position: relative; overflow: hidden; }
-        .payment-step::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--glass-border); }
-        .payment-step.s1::before { background: var(--apple-blue); }
-        .payment-step.s2::before { background: var(--gold); }
-        .payment-step.s3::before { background: #34c759; }
-        
-        .step-pct { font-size: 3.5rem; font-weight: 700; color: rgba(255,255,255,0.05); position: absolute; top: 10px; right: 20px; line-height: 1; }
-        .payment-step h4 { color: #fff; font-size: 1.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
-        .payment-step p { color: var(--text-muted); font-size: 0.9rem; position: relative; z-index: 2; }
-        .pay-amount { font-size: 1.8rem; color: #fff; font-family: monospace; font-weight: 600; margin-top: 20px; border-top: 1px dashed var(--glass-border); padding-top: 20px; position: relative; z-index: 2; }
-
-        /* ================= ANIMACIONES ================= */
-        .reveal { opacity: 0; transform: translateY(40px); transition: 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-
-        @media (max-width: 900px) {
-            .hero h1 { font-size: 3.2rem; }
-            .grid-2, .grid-3, .grid-4, .filter-layout, .pdp-layout, .payment-timeline { grid-template-columns: 1fr; gap: 2rem; }
-            .filter-sidebar { border-right: none; border-bottom: 1px solid var(--glass-border); max-height: 500px; }
-            .quote-table th { display: none; }
-            .quote-table td { display: block; padding: 1.5rem; text-align: left !important; border: none; }
-            .quote-table tr { border-bottom: 1px solid var(--glass-border); display: block; }
-            .total-box { flex-direction: column; text-align: center; gap: 2rem; }
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 2000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: saturate(180%) blur(25px);
+            -webkit-backdrop-filter: saturate(180%) blur(25px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 0;
+            transition: var(--transition);
         }
+        nav .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 20px; font-weight: 800; letter-spacing: 1px; color: #fff; display: flex; align-items: center; gap: 12px; }
+        .logo i { color: var(--gold); }
+        .nav-right { display: flex; align-items: center; gap: 24px; }
+        .cart-icon { position: relative; font-size: 1.4rem; cursor: pointer; color: var(--text-main); }
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: var(--apple-blue);
+            font-size: 10px;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Slider (16:9) */
+        .hero-container {
+            width: 100%;
+            position: relative;
+            background: #000;
+            padding-top: 60px; /* nav space */
+        }
+        .hero-aspect-ratio {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 ratio */
+            overflow: hidden;
+        }
+        @media (max-width: 768px) {
+            .hero-aspect-ratio { padding-bottom: 100%; } /* Slightly taller for mobile */
+        }
+        .swiper-hero {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .swiper-hero .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Audit Section (Analysis) */
+        .audit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .audit-card {
+            background: var(--glass-card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-l);
+            padding: 40px;
+            transition: var(--transition);
+        }
+        .audit-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+        .audit-list { list-style: none; margin-top: 25px; }
+        .audit-list li { margin-bottom: 20px; display: flex; gap: 15px; }
+        .audit-list i { font-size: 1.2rem; margin-top: 4px; }
+        .audit-list h4 { font-size: 1.1rem; color: #fff; margin-bottom: 5px; }
+        .audit-list p { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* Category Carousel */
+        .category-section { padding: 40px 0; background: var(--bg-pure); overflow: hidden; }
+        .category-card {
+            background: var(--glass-card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-m);
+            padding: 25px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            min-width: 140px;
+        }
+        .category-card i { font-size: 2.2rem; color: var(--text-muted); transition: var(--transition); }
+        .category-card span { font-size: 14px; font-weight: 600; color: var(--text-muted); }
+        .category-card.active, .category-card:hover {
+            background: var(--apple-blue-glow);
+            border-color: var(--apple-blue);
+            transform: translateY(-5px);
+        }
+        .category-card.active i, .category-card:hover i { color: var(--apple-blue); }
+        .category-card.active span, .category-card:hover span { color: #fff; }
+
+        /* Store Grid Layout */
+        .store-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        /* Professional Filters */
+        .filters-aside {
+            position: sticky;
+            top: 110px;
+            height: calc(100vh - 130px);
+            overflow-y: auto;
+            padding-right: 15px;
+            user-select: none;
+        }
+        .filters-aside::-webkit-scrollbar { width: 3px; }
+        .filters-aside::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+
+        .filter-block { margin-bottom: 40px; }
+        .filter-block h4 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Price Slider Bar */
+        .range-container { position: relative; margin-bottom: 20px; }
+        .modern-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 10px;
+            background: var(--glass-border);
+            outline: none;
+        }
+        .modern-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0,0,0,0.6);
+            border: 2px solid var(--apple-blue);
+        }
+
+        /* Filter Options */
+        .filter-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+        .filter-item:hover { color: #fff; }
+        .filter-item .box {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--glass-border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .filter-item.active .box {
+            background: var(--apple-blue);
+            border-color: var(--apple-blue);
+        }
+        .filter-item.active .box::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 10px;
+            color: #fff;
+        }
+        .filter-item.active { color: #fff; font-weight: 500; }
+
+        .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag-btn {
+            padding: 10px 18px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-muted);
+        }
+        .tag-btn.active, .tag-btn:hover {
+            border-color: var(--apple-blue);
+            color: #fff;
+            background: var(--apple-blue-glow);
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 30px;
+        }
+        .perfume-card {
+            background: var(--glass-card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-l);
+            padding: 25px;
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        .perfume-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255,255,255,0.25);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8);
+        }
+        .perfume-img-box {
+            width: 100%;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            background: radial-gradient(circle at center, #1a1a1c 0%, #000 100%);
+            border-radius: var(--radius-m);
+            overflow: hidden;
+        }
+        .perfume-img-box img { width: 85%; height: 85%; object-fit: contain; transition: var(--transition); }
+        .perfume-card:hover img { transform: scale(1.12); }
+        
+        .card-brand { font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+        .card-name { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 12px; }
+        .card-price { font-size: 20px; font-weight: 700; color: #fff; margin-top: auto; font-family: monospace; }
+        
+        .badge-elite {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--gold), #8a6d1d);
+            color: #000;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 5px 10px;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(212,175,55,0.3);
+        }
+
+        /* PDP Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 3000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-container {
+            background: var(--bg-panel);
+            border: 1px solid var(--glass-border);
+            width: 100%;
+            max-width: 1150px;
+            max-height: 90vh;
+            border-radius: var(--radius-xl);
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            overflow: hidden;
+            position: relative;
+        }
+        .close-pdp {
+            position: absolute;
+            top: 30px; right: 30px;
+            font-size: 26px;
+            color: var(--text-muted);
+            cursor: pointer;
+            z-index: 20;
+            transition: var(--transition);
+        }
+        .close-pdp:hover { color: #fff; transform: rotate(90deg); }
+        
+        .pdp-gallery { background: #050505; display: flex; align-items: center; justify-content: center; padding: 50px; }
+        .pdp-gallery img { max-width: 90%; max-height: 450px; object-fit: contain; }
+
+        .pdp-info { padding: 60px; overflow-y: auto; }
+        .pdp-brand-name { color: var(--gold); font-size: 14px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
+        .pdp-title { font-size: 42px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; color: #fff; }
+        .pdp-price-tag { font-size: 48px; font-weight: 700; color: #fff; margin-bottom: 45px; font-family: monospace; }
+
+        .size-selection { display: flex; gap: 12px; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 20px; margin-bottom: 35px; }
+        .size-btn {
+            flex: 1;
+            padding: 18px;
+            text-align: center;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+        .size-btn.active { background: var(--apple-blue); color: #fff; box-shadow: 0 10px 25px var(--apple-blue-glow); }
+
+        .luxury-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            padding: 20px;
+            border-radius: var(--radius-m);
+            margin-bottom: 35px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .luxury-box.active { border-color: var(--gold); background: rgba(212, 175, 55, 0.15); box-shadow: 0 0 20px var(--gold-glow); }
+        .luxury-text h5 { font-size: 15px; color: var(--gold); margin-bottom: 2px; }
+        .luxury-text p { font-size: 12px; color: var(--text-muted); }
+
+        .btn-add-cart {
+            width: 100%;
+            padding: 22px;
+            background: var(--apple-blue);
+            color: #fff;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .btn-add-cart:hover { transform: scale(1.02); box-shadow: 0 20px 40px var(--apple-blue-glow); }
+
+        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 45px; }
+        .spec-cell { border-left: 2px solid var(--apple-blue); padding-left: 18px; }
+        .spec-cell label { display: block; font-size: 10px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 6px; }
+        .spec-cell span { font-size: 15px; color: #fff; font-weight: 600; }
+
+        .notes-visualizer { background: rgba(0,0,0,0.4); padding: 30px; border-radius: var(--radius-m); border: 1px solid var(--glass-border); }
+        .notes-visualizer h4 { font-size: 14px; color: #fff; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .notes-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center; }
+        .note-box i { font-size: 1.5rem; color: var(--apple-blue); margin-bottom: 10px; display: block; }
+        .note-box .note-label { font-size: 9px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        .note-box .note-name { font-size: 13px; font-weight: 500; }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .store-layout { grid-template-columns: 1fr; }
+            .filters-aside {
+                position: fixed;
+                top: 0; left: -100%;
+                width: 100%; height: 100vh;
+                background: #000;
+                z-index: 2500;
+                padding: 110px 40px 60px;
+                transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .filters-aside.open { left: 0; }
+            .modal-container { grid-template-columns: 1fr; max-height: 95vh; border-radius: 0; }
+            .pdp-gallery { padding: 30px; }
+            .pdp-info { padding: 40px 30px; }
+            .audit-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .perfume-card { padding: 15px; }
+            .card-name { font-size: 15px; }
+            .pdp-title { font-size: 32px; }
+            .section-header h2 { font-size: 2.2rem; }
+        }
+
+        /* Mobile Controls */
+        .mobile-floating-btn {
+            position: fixed;
+            bottom: 30px; left: 50%;
+            transform: translateX(-50%);
+            background: var(--apple-blue);
+            color: #fff;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            z-index: 2400;
+            display: none;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            align-items: center; gap: 12px;
+            border: none;
+            cursor: pointer;
+        }
+        @media (max-width: 1024px) { .mobile-floating-btn { display: flex; } }
+
+        /* Real-time Loader */
+        .grid-loader {
+            grid-column: 1 / -1;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 100px 0;
+        }
+        .spinner-ring {
+            width: 60px; height: 60px;
+            border: 4px solid var(--glass-border);
+            border-top-color: var(--apple-blue);
+            border-radius: 50%;
+            animation: rotate 1s linear infinite;
+        }
+        @keyframes rotate { to { transform: rotate(360deg); } }
+
+        /* Footer */
+        footer { padding: 80px 0; border-top: 1px solid var(--glass-border); text-align: center; }
+        footer .logo { justify-content: center; margin-bottom: 20px; font-size: 24px; }
+        footer p { color: var(--text-muted); font-size: 0.9rem; }
+
     </style>
 </head>
 <body>
 
-    <nav id="navbar">
-        <div class="logo"><i class="fa-solid fa-gem"></i> ALTA57</div>
-        <div class="badge-nav"><i class="fa-solid fa-lock" style="margin-right: 5px;"></i> Propuesta Oficial: Nidia Perfumes</div>
+    <!-- Professional Navigation -->
+    <nav id="topNav">
+        <div class="container">
+            <div class="logo"><i class="fa-solid fa-gem"></i> NIDIA PERFUMES</div>
+            <div class="nav-right">
+                <div class="cart-icon" id="cartBtn">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-badge">0</span>
+                </div>
+            </div>
+        </div>
     </nav>
 
-    <header class="hero">
-        <div class="container reveal">
-            <h5 style="color: var(--text-muted); font-family: var(--font-apple); font-weight: 500; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 1rem;">Shopify OS 2.0 Architecture</h5>
-            <h1 class="text-gradient-blue">Ingeniería E-Commerce.<br>Experiencia de Élite.</h1>
-            <p>Diseñamos plataformas sin fricción. Interfaces de cristal (Glassmorphism), velocidad asíncrona, gestión inteligente de <i>Decants</i> y un ecosistema tecnológico diseñado para dominar el mercado de la Alta Perfumería.</p>
-            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
-                <a href="#ui-ux" class="btn btn-blue">Explorar Interfaz Interactiva</a>
-                <a href="#cotizacion" class="btn btn-outline">Ver Plan de Inversión</a>
+    <!-- Professional Hero (16:9) -->
+    <div class="hero-container">
+        <div class="hero-aspect-ratio">
+            <div class="swiper swiper-hero">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="https://alta57.com/wp-content/uploads/2026/06/nidiaperfumes-scaled.webp" alt="Banner Elite 1"></div>
+                    <div class="swiper-slide"><img src="https://alta57.com/wp-content/uploads/2026/06/nidiaperfumes2-scaled.webp" alt="Banner Elite 2"></div>
+                </div>
             </div>
         </div>
-    </header>
+    </div>
 
-    <section id="auditoria" class="bg-elevated">
+    <!-- Strategic Analysis (Audit) -->
+    <section id="analysis">
         <div class="container">
-            <div class="section-header reveal">
-                <h2>Inteligencia Competitiva.</h2>
-                <p>Auditoría técnica profunda de <strong>disfragancias.com</strong>. Identificamos su sólida estructura de datos y trazamos la ruta de ingeniería exacta para superarlos en Velocidad y Retención Móvil.</p>
+            <div class="section-header">
+                <h2 class="text-gradient-blue">Ingeniería E-Commerce de Próxima Generación</h2>
+                <p>Análisis detallado de optimización para Nidia Perfumes. Una evolución tecnológica diseñada para superar los estándares de la competencia.</p>
             </div>
 
-            <div class="grid-2 reveal">
-                <div class="glass-card">
-                    <h3 style="font-size: 1.5rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem; color: #fff;">
-                        <i class="fa-solid fa-microscope text-gradient-gold"></i> Diagnóstico del Referente
-                    </h3>
-                    <ul class="list-clean">
+            <div class="audit-grid">
+                <div class="audit-card">
+                    <h3 style="display: flex; align-items: center; gap: 12px;"><i class="fa-solid fa-microscope text-gradient-gold"></i> Diagnóstico del Sector</h3>
+                    <ul class="audit-list">
                         <li>
                             <i class="fa-solid fa-database" style="color: var(--gold);"></i>
-                            <div><h4>Arquitectura Base Fuerte</h4>Excelente taxonomía. Tienen una base de datos robusta de familias olfativas, notas y marcas.</div>
+                            <div><h4>Taxonomía de Datos Robusta</h4>El referente actual posee una excelente base de datos de notas y familias, pero su arquitectura visual genera fricción en el usuario.</div>
                         </li>
                         <li>
-                            <i class="fa-solid fa-triangle-exclamation" style="color: #ff453a;"></i>
-                            <div><h4>Fricción: Filtros Síncronos</h4>Al aplicar un filtro (ej: "Maderas"), su servidor recarga toda la página web. Esos segundos de lentitud frustran al usuario y disparan la tasa de rebote móvil.</div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-caret-down" style="color: #ff453a;"></i>
-                            <div><h4>UI de Variables Estándar</h4>El uso de listas desplegables para elegir "Decants" ensucia el diseño, oculta el precio dinámico y requiere demasiados toques.</div>
+                            <i class="fa-solid fa-clock-rotate-left" style="color: #ff453a;"></i>
+                            <div><h4>Latencia en Filtros</h4>La recarga síncrona de páginas al filtrar interrumpe el flujo de compra. Nuestra solución AJAX elimina esta barrera.</div>
                         </li>
                     </ul>
                 </div>
-
-                <div class="glass-card glass-card-blue">
-                    <h3 class="text-gradient-blue" style="font-size: 1.5rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem;">
-                        <i class="fa-solid fa-rocket text-gradient-blue"></i> La Evolución: Alta 57
-                    </h3>
-                    <ul class="list-clean">
+                <div class="audit-card" style="border-color: var(--apple-blue);">
+                    <h3 style="display: flex; align-items: center; gap: 12px;"><i class="fa-solid fa-rocket text-gradient-blue"></i> Solución Alta 57</h3>
+                    <ul class="audit-list">
                         <li>
-                            <i class="fa-solid fa-bolt text-gradient-blue"></i>
-                            <div><h4>Motor de Filtros AJAX</h4>Desarrollo asíncrono. El cliente cruzará variables (Acordes + Climas + Precios) y la grilla se actualizará en <strong>milisegundos</strong> sin recargar la pantalla.</div>
+                            <i class="fa-solid fa-bolt" style="color: var(--apple-blue);"></i>
+                            <div><h4>Navegación Asíncrona</h4>Actualización del catálogo en milisegundos mediante el motor Shopify Search & Discovery configurado a medida.</div>
                         </li>
                         <li>
-                            <i class="fa-solid fa-hand-pointer text-gradient-blue"></i>
-                            <div><h4>Smart Pills (Decants)</h4>Reemplazamos los dropdowns por selectores táctiles de un clic que sincronizan imagen, inventario y precio de forma dinámica.</div>
-                        </li>
-                        <li>
-                            <i class="fa-brands fa-apple text-gradient-blue"></i>
-                            <div><h4>Dark Luxury Design</h4>Interfaz minimalista inspirada en Apple. Fondos negros puros (OLED), tipografía limpia y tarjetas de cristal (Glassmorphism).</div>
+                            <i class="fa-solid fa-vial" style="color: var(--apple-blue);"></i>
+                            <div><h4>Lógica Avanzada de Decants</h4>Selector inteligente de variantes que sincroniza inventario, precio y presentación visual sin clics innecesarios.</div>
                         </li>
                     </ul>
                 </div>
@@ -251,433 +580,397 @@
         </div>
     </section>
 
-    <section id="arquitectura">
+    <!-- Category Selector -->
+    <section class="category-section">
         <div class="container">
-            <div class="section-header reveal">
-                <h2>Arquitectura & Ecosistema.</h2>
-                <p>No utilizamos constructores de arrastrar y soltar que ralentizan la web. Desarrollamos editando el código nativo para garantizar velocidad, integrando las mejores licencias del mercado.</p>
-            </div>
-
-            <div class="grid-4 reveal" style="text-align: center;">
-                <div class="glass-card" style="padding: 2rem;"><i class="fa-brands fa-shopify" style="font-size: 3rem; color: #95BF47; margin-bottom: 15px;"></i><h4 style="font-size: 1.1rem; color: #fff;">Shopify OS 2.0</h4><p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Infraestructura Core</p></div>
-                <div class="glass-card" style="padding: 2rem;"><i class="fa-solid fa-code" style="font-size: 3rem; color: var(--apple-blue); margin-bottom: 15px;"></i><h4 style="font-size: 1.1rem; color: #fff;">Liquid & Metafields</h4><p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Base de datos y variables a medida</p></div>
-                <div class="glass-card" style="padding: 2rem;"><i class="fa-solid fa-globe" style="font-size: 3rem; color: var(--gold); margin-bottom: 15px;"></i><h4 style="font-size: 1.1rem; color: #fff;">Dominios .com/.co</h4><p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Cloudflare CDN & SSL Bancario</p></div>
-                <div class="glass-card" style="padding: 2rem;"><i class="fa-solid fa-credit-card" style="font-size: 3rem; color: #00a4e4; margin-bottom: 15px;"></i><h4 style="font-size: 1.1rem; color: #fff;">Wompi / PayU</h4><p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Pasarelas de Pago Colombia</p></div>
-            </div>
-            
-            <div class="grid-2 reveal" style="margin-top: 1.5rem;">
-                <div class="glass-card" style="padding: 1.5rem; display: flex; align-items: center; gap: 20px;">
-                    <i class="fa-solid fa-magnifying-glass" style="font-size: 2.5rem; color: var(--apple-blue);"></i> 
-                    <div><h4 style="font-size: 1.1rem; color: #fff;">Search & Discovery App</h4><p style="font-size: 0.9rem; color: var(--text-muted);">Motor algorítmico oficial de Shopify para potenciar los filtros AJAX cruzados.</p></div>
-                </div>
-                <div class="glass-card" style="padding: 1.5rem; display: flex; align-items: center; gap: 20px;">
-                    <i class="fa-solid fa-envelope-open-text" style="font-size: 2.5rem; color: #48c9b0;"></i> 
-                    <div><h4 style="font-size: 1.1rem; color: #fff;">Klaviyo API</h4><p style="font-size: 0.9rem; color: var(--text-muted);">Automatización para recuperación agresiva de carritos abandonados vía Email/SMS.</p></div>
+            <div class="swiper swiper-cat">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><div class="category-card active" data-cat="all"><i class="fa-solid fa-border-all"></i><span>Todo el Catálogo</span></div></div>
+                    <div class="swiper-slide"><div class="category-card" data-cat="nicho"><i class="fa-solid fa-crown"></i><span>Perfumería de Nicho</span></div></div>
+                    <div class="swiper-slide"><div class="category-card" data-cat="diseñador"><i class="fa-solid fa-vest-patches"></i><span>Diseñador</span></div></div>
+                    <div class="swiper-slide"><div class="category-card" data-cat="arabe"><i class="fa-solid fa-moon"></i><span>Inspiración Árabe</span></div></div>
+                    <div class="swiper-slide"><div class="category-card" data-cat="elite"><i class="fa-solid fa-star"></i><span>Elite Selection</span></div></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="ui-ux" class="bg-elevated">
+    <!-- Catalog & Advanced Filters -->
+    <section id="store" class="bg-elevated">
         <div class="container">
-            <div class="section-header reveal">
-                <h2>Experiencia sin Fricciones (UI/UX).</h2>
-                <p>Cero imágenes generadas por IA. Hemos maquetado estos <strong>simuladores interactivos en código puro</strong> para demostrar nuestra capacidad técnica y la estructura final de tu tienda.</p>
-            </div>
-
-            <div class="ui-window reveal">
-                <div class="ui-header">
-                    <div style="display: flex; gap: 6px;"><div class="mac-dot"></div><div class="mac-dot"></div><div class="mac-dot"></div></div>
-                    <span>Módulo 1: Panel de Categorías & Navegación Táctil</span>
-                </div>
-                <div style="padding: 1rem 3rem 0; margin-top: 1.5rem;">
-                    <h4 style="color: #fff; font-size: 1.2rem;">Explorar Colecciones</h4>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Mega menú predictivo. Acceso directo a las familias principales de Nidia Perfumes.</p>
-                </div>
-                <div class="cat-slider">
-                    <div class="cat-card"><i class="fa-solid fa-vest-patches"></i><span>Diseñador</span></div>
-                    <div class="cat-card" style="border-color: var(--gold); background: rgba(212, 175, 55, 0.05);"><i class="fa-solid fa-crown" style="color: var(--gold);"></i><span style="color: var(--gold);">Nicho Premium</span></div>
-                    <div class="cat-card"><i class="fa-solid fa-moon"></i><span>Árabes</span></div>
-                    <div class="cat-card"><i class="fa-solid fa-vial" style="color: var(--apple-blue);"></i><span>Decants (Muestras)</span></div>
-                    <div class="cat-card"><i class="fa-solid fa-fire" style="color: #ff3b30;"></i><span>Más Vendidos</span></div>
-                    <div class="cat-card"><i class="fa-solid fa-gift"></i><span>Regalos</span></div>
-                </div>
-            </div>
-
-            <div class="ui-window reveal">
-                <div class="ui-header">
-                    <div style="display: flex; gap: 6px;"><div class="mac-dot"></div><div class="mac-dot"></div><div class="mac-dot"></div></div>
-                    <span>Módulo 2: Motor de Filtros Inteligentes (Algoritmo Asíncrono)</span>
-                </div>
+            <div class="store-layout">
                 
-                <div class="filter-layout">
-                    <div class="filter-sidebar">
-                        
-                        <div class="filter-group">
-                            <div class="filter-title">Filtrar Por Precio <i class="fa-solid fa-chevron-up" style="font-size: 0.7rem;"></i></div>
-                            <div style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-top: 20px; position: relative;">
-                                <div style="position: absolute; left: 15%; right: 35%; height: 100%; background: var(--apple-blue); border-radius: 4px;"></div>
-                            </div>
-                        </div>
+                <!-- Sidebar Filters -->
+                <aside class="filters-aside" id="filterPanel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+                        <h3 style="font-size: 22px;">Filtros Avanzados</h3>
+                        <span style="color: var(--apple-blue); font-size: 13px; cursor: pointer; font-weight: 600;" id="resetBtn">LIMPIAR TODO</span>
+                    </div>
 
-                        <div class="filter-group">
-                            <div class="filter-title">Género & Categorías <i class="fa-solid fa-chevron-up" style="font-size: 0.7rem;"></i></div>
-                            <div class="ui-checkbox active" onclick="this.classList.toggle('active')"><div class="box"></div> Masculino</div>
-                            <div class="ui-checkbox" onclick="this.classList.toggle('active')"><div class="box"></div> Femenino</div>
-                            <div class="ui-checkbox" onclick="this.classList.toggle('active')"><div class="box"></div> Unisex</div>
-                            <div class="ui-checkbox active" style="margin-top: 15px;" onclick="this.classList.toggle('active')"><div class="box"></div> Más Vendidas</div>
-                        </div>
-
-                        <div class="filter-group">
-                            <div class="filter-title text-gradient-gold">Mejor Tiempo de Uso <i class="fa-solid fa-star" style="color: var(--gold); font-size: 0.7rem;"></i></div>
-                            <div class="tag-cloud">
-                                <span class="ui-tag active" onclick="this.classList.toggle('active')"><i class="fa-solid fa-heart"></i> Citas</span>
-                                <span class="ui-tag" onclick="this.classList.toggle('active')"><i class="fa-solid fa-sun"></i> Día</span>
-                                <span class="ui-tag" onclick="this.classList.toggle('active')"><i class="fa-solid fa-graduation-cap"></i> Universidad</span>
-                                <span class="ui-tag active" onclick="this.classList.toggle('active')"><i class="fa-solid fa-glass-cheers"></i> Fiesta</span>
-                                <span class="ui-tag" onclick="this.classList.toggle('active')"><i class="fa-solid fa-dumbbell"></i> Gym</span>
-                                <span class="ui-tag" style="border-color: var(--apple-blue); color: var(--apple-blue); background: rgba(10,132,255,0.05);" onclick="this.classList.toggle('active')"><i class="fa-solid fa-moon"></i> Noche</span>
-                                <span class="ui-tag" onclick="this.classList.toggle('active')"><i class="fa-solid fa-star"></i> Ocasiones Especiales</span>
-                                <span class="ui-tag" onclick="this.classList.toggle('active')"><i class="fa-solid fa-briefcase"></i> Oficina</span>
-                                <span class="ui-tag" onclick="this.classList.toggle('active')"><i class="fa-solid fa-umbrella-beach"></i> Playa</span>
+                    <div class="filter-block">
+                        <h4>Rango de Inversión <span id="priceLabel" style="color: #fff; font-family: monospace;">$ 2.500k</span></h4>
+                        <div class="range-container">
+                            <input type="range" class="modern-slider" id="priceInput" min="50000" max="2500000" step="10000" value="2500000">
+                            <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 12px;">
+                                <span>$ 50k</span>
+                                <span>$ 2.5M</span>
                             </div>
-                        </div>
-
-                        <div class="filter-group" style="border: none;">
-                            <div class="filter-title">Climas & Acordes Principales <i class="fa-solid fa-chevron-up" style="font-size: 0.7rem;"></i></div>
-                            <div class="ui-checkbox active" onclick="this.classList.toggle('active')"><div class="box"></div> Invierno (Frío)</div>
-                            <div class="ui-checkbox active" onclick="this.classList.toggle('active')"><div class="box"></div> Otoño (Templado, frío)</div>
-                            <div class="ui-checkbox" onclick="this.classList.toggle('active')"><div class="box"></div> Primavera (Templado, cálido)</div>
-                            
-                            <div class="tag-cloud" style="margin-top: 15px;">
-                                <span class="ui-tag active" onclick="this.classList.toggle('active')">Avainillado</span>
-                                <span class="ui-tag" onclick="this.classList.toggle('active')">Lavanda</span>
-                                <span class="ui-tag" onclick="this.classList.toggle('active')">Aromático</span>
-                                <span class="ui-tag active" onclick="this.classList.toggle('active')">Amaderado</span>
-                                <span class="ui-tag" onclick="this.classList.toggle('active')">Dulce</span>
-                                <span class="ui-tag" onclick="this.classList.toggle('active')">Aromas...</span>
-                            </div>
-                        </div>
-                        
-                        <div style="font-size: 0.7rem; color: var(--text-muted); text-align: center; border-top: 1px dashed var(--glass-border); padding-top: 15px; margin-top: 15px;">
-                            + Filtros integrados: Marcas, Año de Lanzamiento, País, Perfumista y Tamaño (ml).
                         </div>
                     </div>
-                    
-                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 4rem;">
-                        <i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; color: var(--apple-blue); margin-bottom: 1.5rem;"></i>
-                        <h4 style="font-size: 1.5rem; color: #fff;">Procesando Variables...</h4>
-                        <p style="color: var(--text-muted); font-size: 1rem; max-width: 450px; margin-top: 10px;">La grilla de perfumes se actualizará en milisegundos en función de los filtros elegidos, sin interrupciones ni pantallas en blanco.</p>
-                        <span style="display: inline-block; background: rgba(10,132,255,0.1); color: var(--apple-blue); font-family: monospace; font-size: 0.8rem; padding: 5px 10px; border-radius: 4px; margin-top: 15px;">AJAX ENGINE ACTIVE</span>
+
+                    <div class="filter-block">
+                        <h4>Perfil de Género</h4>
+                        <div class="filter-item" data-type="gender" data-val="Masculino"><div class="box"></div> Masculino</div>
+                        <div class="filter-item" data-type="gender" data-val="Femenino"><div class="box"></div> Femenino</div>
+                        <div class="filter-item" data-type="gender" data-val="Unisex"><div class="box"></div> Unisex</div>
                     </div>
-                </div>
+
+                    <div class="filter-block">
+                        <h4>Ocasión & Clima</h4>
+                        <div class="tag-cloud">
+                            <span class="tag-btn" data-type="occasion" data-val="Citas">Citas Románticas</span>
+                            <span class="tag-btn" data-type="occasion" data-val="Oficina">Entorno Profesional</span>
+                            <span class="tag-btn" data-type="occasion" data-val="Noche">Eventos Nocturnos</span>
+                            <span class="tag-btn" data-type="occasion" data-val="Fiesta">Fiesta / Disco</span>
+                            <span class="tag-btn" data-type="occasion" data-val="Invierno">Clima Frío</span>
+                            <span class="tag-btn" data-type="occasion" data-val="Día">Uso Diario</span>
+                        </div>
+                    </div>
+
+                    <div class="filter-block">
+                        <h4>Familias Olfativas</h4>
+                        <div class="filter-item" data-type="accord" data-val="Amaderado"><div class="box"></div> Amaderado</div>
+                        <div class="filter-item" data-type="accord" data-val="Avainillado"><div class="box"></div> Avainillado / Dulce</div>
+                        <div class="filter-item" data-type="accord" data-val="Cítrico"><div class="box"></div> Cítrico / Fresco</div>
+                        <div class="filter-item" data-type="accord" data-val="Cuero"><div class="box"></div> Cuero / Ahumado</div>
+                        <div class="filter-item" data-type="accord" data-val="Floral"><div class="box"></div> Floral / Delicado</div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 20px; display: none;" id="closeFilterMobile">
+                        <button class="btn-add-cart" style="padding: 15px; font-size: 14px;" onclick="toggleFilters()">Aplicar Filtros</button>
+                    </div>
+                </aside>
+
+                <!-- Product Catalog -->
+                <main>
+                    <div class="grid-loader" id="loader">
+                        <div class="spinner-ring"></div>
+                        <p style="margin-top: 20px; color: var(--text-muted); font-size: 14px; font-weight: 500;">Sincronizando fragancias...</p>
+                    </div>
+                    <div class="product-grid" id="grid">
+                        <!-- Products will be injected here -->
+                    </div>
+                </main>
+
             </div>
-
-            <div class="ui-window reveal">
-                <div class="ui-header">
-                    <div style="display: flex; gap: 6px;"><div class="mac-dot"></div><div class="mac-dot"></div><div class="mac-dot"></div></div>
-                    <span>Módulo 3: Página de Producto Individual (PDP), Decants y Ficha Técnica</span>
-                </div>
-                
-                <div class="pdp-layout">
-                    <div>
-                        <div class="pdp-img-sim">
-                            <i class="fa-solid fa-bottle-droplet" style="font-size: 6rem; color: #333;"></i>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <div style="font-size: 0.8rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1px;">Marca de Diseñador</div>
-                        <h3 style="font-size: 2.5rem; color: #fff; line-height: 1.1; margin-bottom: 10px; margin-top: 5px;">Perfume Signature</h3>
-                        
-                        <div class="dynamic-price" id="demo-price">$ 850.000 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 400; font-family: var(--font-main);">COP</span></div>
-                        
-                        <div style="margin-top: 2rem;">
-                            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">SELECCIONE EL TAMAÑO / DECANT:</span>
-                            <div class="pill-container">
-                                <div class="pill-btn" onclick="updatePrice(this, '35.000', false)">5 ml</div>
-                                <div class="pill-btn" onclick="updatePrice(this, '65.000', false)">10 ml</div>
-                                <div class="pill-btn active" style="background: var(--apple-blue); color: #fff;" onclick="updatePrice(this, '850.000', true)"><i class="fa-solid fa-crown" style="font-size: 0.7rem;"></i> Full 100ml</div>
-                            </div>
-                        </div>
-
-                        <button class="btn btn-blue" style="width: 100%; border-radius: 12px; padding: 1.2rem; justify-content: center; font-size: 1.1rem; margin-top: 10px; margin-bottom: 2rem;"><i class="fa-solid fa-bag-shopping"></i> Agregar a la Bolsa</button>
-
-                        <h4 style="font-size: 1.2rem; color: #fff; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;"><i class="fa-solid fa-book-open" style="color: var(--apple-blue);"></i> Acerca del Perfume</h4>
-                        
-                        <div class="spec-grid">
-                            <div class="spec-item"><span class="spec-label">Género</span><span class="spec-value">Masculino</span></div>
-                            <div class="spec-item"><span class="spec-label">Categoría de la Marca</span><span class="spec-value">Diseñador</span></div>
-                            <div class="spec-item"><span class="spec-label">Concentración</span><span class="spec-value">Eau de Parfum</span></div>
-                            <div class="spec-item"><span class="spec-label">Año de Lanzamiento</span><span class="spec-value">2023</span></div>
-                            <div class="spec-item"><span class="spec-label">País de Origen</span><span class="spec-value">Italia</span></div>
-                            <div class="spec-item"><span class="spec-label">Clima Ideal</span><span class="spec-value">Invierno / Otoño / Primavera</span></div>
-                            <div class="spec-item" style="grid-column: 1 / -1; border-color: var(--gold); background: rgba(212, 175, 55, 0.03);">
-                                <span class="spec-label" style="color: var(--gold);">Acordes Principales</span>
-                                <span class="spec-value">Avainillado, Lavanda, Aromático, Amaderado, Dulce.</span>
-                            </div>
-                        </div>
-
-                        <h4 style="font-size: 1rem; color: #fff; margin-top: 2rem; margin-bottom: 5px;">Pirámide Olfativa (Notas)</h4>
-                        <div class="pyramid-grid">
-                            <div class="pyramid-box">
-                                <i class="fa-solid fa-wind" style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 8px;"></i>
-                                <span class="spec-label">Salida</span>
-                                <span class="spec-value text-gradient-blue" style="font-size: 0.9rem;">Vainilla</span>
-                            </div>
-                            <div class="pyramid-box">
-                                <i class="fa-solid fa-heart-pulse" style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 8px;"></i>
-                                <span class="spec-label">Corazón</span>
-                                <span class="spec-value text-gradient-blue" style="font-size: 0.9rem;">Lavanda</span>
-                            </div>
-                            <div class="pyramid-box">
-                                <i class="fa-solid fa-leaf" style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 8px;"></i>
-                                <span class="spec-label">Base</span>
-                                <span class="spec-value text-gradient-blue" style="font-size: 0.9rem;">Vetiver</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
         </div>
     </section>
 
-    <section id="cotizacion">
-        <div class="container">
-            <div class="section-header reveal">
-                <h2 class="text-gradient-gold">Plan de Inversión Tecnológica.</h2>
-                <p>Presupuesto estructurado con total transparencia. Desglosamos la Ingeniería de Software (Pago Único a Alta 57) de los Costos Operativos de Infraestructura en la nube.</p>
+    <!-- Professional PDP Modal -->
+    <div class="modal-overlay" id="pdpModal">
+        <div class="modal-container">
+            <div class="close-pdp" id="closePdp"><i class="fa-solid fa-xmark"></i></div>
+
+            <div class="pdp-gallery">
+                <img id="pdpImage" src="" alt="Producto">
             </div>
 
-            <div class="reveal" style="margin-bottom: 4rem;">
-                <table class="quote-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 65%; color: #fff;"><i class="fa-solid fa-code"></i> Fases de Desarrollo e Ingeniería (Pago a Alta 57)</th>
-                            <th style="text-align: right;">Inversión (COP)</th>
-                            <th style="text-align: center;">Incluir</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="item-title"><i class="fa-brands fa-apple" style="color: var(--text-muted);"></i> Fase 1: Setup Core & Diseño UX/UI Visual</div>
-                                <div class="item-desc">Setup completo de Shopify OS 2.0. Diseño "Apple Dark Luxury". Maquetación Mobile-First del Hero, Sliders de Categorías, Grillas de Productos y Mega Menú predictivo.</div>
-                            </td>
-                            <td class="item-price">$ 2.800.000</td>
-                            <td style="text-align: center;"><label class="switch"><input type="checkbox" class="price-calc" data-val="2800000" checked disabled><span class="slider"></span></label></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="item-title"><i class="fa-solid fa-database" style="color: var(--text-muted);"></i> Fase 2: Lógica Backend (Liquid) y Variables de Decants</div>
-                                <div class="item-desc">Programación de Fichas Técnicas (PDP) y creación de "Metafields". Implementación de selectores táctiles ("Smart Pills") para procesar inventario y precios dinámicos de decants vs botellas de forma independiente.</div>
-                            </td>
-                            <td class="item-price">$ 3.500.000</td>
-                            <td style="text-align: center;"><label class="switch"><input type="checkbox" class="price-calc" data-val="3500000" checked disabled><span class="slider"></span></label></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="item-title"><i class="fa-solid fa-bolt" style="color: var(--text-muted);"></i> Fase 3: Algoritmo de Filtros Facetados (AJAX)</div>
-                                <div class="item-desc">Integración del buscador asíncrono. Configuración de cruces para las 13 variables complejas: Precio, Género, Acordes, Climas, Tiempos de Uso, Marcas, País, Año, Perfumista y Tamaños, sin recargas de página.</div>
-                            </td>
-                            <td class="item-price">$ 2.800.000</td>
-                            <td style="text-align: center;"><label class="switch"><input type="checkbox" class="price-calc" data-val="2800000" checked disabled><span class="slider"></span></label></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="item-title"><i class="fa-solid fa-rocket" style="color: var(--text-muted);"></i> Fase 4: Checkout, Retención & Despliegue QA</div>
-                                <div class="item-desc">Conexión de pasarelas locales (Wompi / MercadoPago). Configuración de flujos automáticos de Klaviyo (Recuperación de Carritos), vinculación de Dominios, SSL, Preguntas Frecuentes y auditoría de lanzamiento.</div>
-                            </td>
-                            <td class="item-price">$ 1.900.000</td>
-                            <td style="text-align: center;"><label class="switch"><input type="checkbox" class="price-calc" data-val="1900000" checked disabled><span class="slider"></span></label></td>
-                        </tr>
-                        <tr style="background: rgba(10, 132, 255, 0.05); border-left: 3px solid var(--apple-blue);">
-                            <td>
-                                <div class="item-title" style="color: var(--apple-blue);"><i class="fa-solid fa-plus-circle"></i> Módulo Opcional: Carga Masiva de Catálogo (Data Entry)</div>
-                                <div class="item-desc">Subida manual, estructuración y optimización de imágenes de hasta 150-200 perfumes iniciales. Incluye la configuración manual en base de datos de las notas olfativas y variaciones de decants para los filtros.</div>
-                            </td>
-                            <td class="item-price" style="color: #fff;">$ 1.200.000</td>
-                            <td style="text-align: center;"><label class="switch"><input type="checkbox" class="price-calc" data-val="1200000"><span class="slider"></span></label></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="reveal" style="margin-bottom: 4rem;">
-                <h3 style="font-size: 1.3rem; margin-bottom: 1rem; color: #fff;"><i class="fa-solid fa-server" style="color: var(--text-muted); margin-right: 5px;"></i> Costos Operativos (Infraestructura SaaS)</h3>
-                <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Pagos recurrentes asumidos por Nidia Perfumes a proveedores internacionales (mediante TC) para garantizar la propiedad absoluta de sus activos, licencias y servidores.</p>
+            <div class="pdp-info">
+                <span class="pdp-brand-name" id="pdpBrand"></span>
+                <h2 class="pdp-title" id="pdpTitle"></h2>
                 
-                <div class="grid-3">
-                    <div style="background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 16px; border: 1px dashed var(--glass-border);">
-                        <strong style="color: #fff; font-size: 1.05rem;"><i class="fa-brands fa-shopify" style="color: #95BF47;"></i> Plan Shopify Core</strong>
-                        <div style="color: var(--gold); font-family: monospace; font-size: 1.2rem; margin: 5px 0;">~$ 39 USD / mes</div>
-                        <span style="color: var(--text-muted); font-size: 0.85rem;">Servidores globales (CDN), almacenamiento ilimitado y checkout seguro PCI.</span>
+                <div class="pdp-price-tag" id="pdpPrice"></div>
+
+                <div style="margin-bottom: 35px;">
+                    <label style="font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 15px; display: block; letter-spacing: 1px;">Presentación del Decant / Frasco:</label>
+                    <div class="size-selection">
+                        <div class="size-btn" data-mod="0.08" data-size="5ml">5ml</div>
+                        <div class="size-btn" data-mod="0.15" data-size="10ml">10ml</div>
+                        <div class="size-btn" data-mod="0.28" data-size="20ml">20ml</div>
+                        <div class="size-btn active" data-mod="1" data-size="Full Bottle">Full Bottle</div>
                     </div>
-                    <div style="background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 16px; border: 1px dashed var(--glass-border);">
-                        <strong style="color: #fff; font-size: 1.05rem;"><i class="fa-solid fa-globe" style="color: var(--apple-blue);"></i> Dominios (.com / .co)</strong>
-                        <div style="color: var(--gold); font-family: monospace; font-size: 1.2rem; margin: 5px 0;">~$ 25 USD / anual</div>
-                        <span style="color: var(--text-muted); font-size: 0.85rem;">Compra y/o renovación anual del nombre en internet a través de Namecheap/GoDaddy.</span>
+                </div>
+
+                <div class="luxury-box" id="luxuryToggle">
+                    <div class="luxury-text">
+                        <h5>Añadir Decant de Lujo Elite</h5>
+                        <p>Vial de cristal templado con atomizador premium y estuche.</p>
                     </div>
-                    <div style="background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 16px; border: 1px dashed var(--glass-border);">
-                        <strong style="color: #fff; font-size: 1.05rem;"><i class="fa-solid fa-plug" style="color: #ff9f0a;"></i> Licencias de Apps Pro</strong>
-                        <div style="color: var(--gold); font-family: monospace; font-size: 1.2rem; margin: 5px 0;">~$ 20 - $40 USD / mes</div>
-                        <span style="color: var(--text-muted); font-size: 0.85rem;">Suscripciones para App de Filtros (Search & Discovery) y Marketing Automático (Klaviyo).</span>
+                    <div style="color: var(--gold); font-weight: 800; font-family: monospace;">+$25.000</div>
+                </div>
+
+                <button class="btn-add-cart" id="cartAction">
+                    <i class="fa-solid fa-bag-shopping"></i> Agregar al Carrito
+                </button>
+
+                <div class="specs-grid">
+                    <div class="spec-cell"><label>Género</label><span id="pdpGender"></span></div>
+                    <div class="spec-cell"><label>Intensidad</label><span>Eau de Parfum</span></div>
+                    <div class="spec-cell" style="grid-column: 1 / -1;"><label>Acordes Olfativos</label><span id="pdpAccords"></span></div>
+                </div>
+
+                <div class="notes-visualizer">
+                    <h4>Estructura de la Fragancia</h4>
+                    <div class="notes-row">
+                        <div class="note-box"><i class="fa-solid fa-wind"></i><span class="note-label">Salida</span><span class="note-name" id="nSalida"></span></div>
+                        <div class="note-box"><i class="fa-solid fa-heart"></i><span class="note-label">Corazón</span><span class="note-name" id="nCorazon"></span></div>
+                        <div class="note-box"><i class="fa-solid fa-leaf"></i><span class="note-label">Base</span><span class="note-name" id="nBase"></span></div>
                     </div>
                 </div>
             </div>
-
-            <div class="total-box reveal">
-                <div>
-                    <h3 style="font-size: 1.2rem; color: var(--text-muted); font-weight: 400; margin-bottom: 5px;">Inversión Total de Ingeniería E-Commerce:</h3>
-                    <div class="grand-total" id="grand-total">$ 11.000.000 <span style="font-size: 1.5rem; color: var(--text-muted); font-weight: 500;">COP</span></div>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 10px;"><i class="fa-solid fa-clock"></i> Tiempo estimado de desarrollo "Llave en Mano": <strong>6 a 8 semanas</strong>.</p>
-                </div>
-                <div style="text-align: right;">
-                    <button id="btn-accept" class="btn btn-gold" style="padding: 1.5rem 3rem; font-size: 1.2rem; border-radius: 50px;">
-                        <i class="fa-solid fa-signature"></i> Aprobar Propuesta e Iniciar
-                    </button>
-                </div>
-            </div>
-
-            <div class="reveal" style="margin-top: 5rem; padding-top: 4rem; border-top: 1px solid var(--glass-border);">
-                <div class="section-header" style="margin-bottom: 3rem;">
-                    <h2>Plan de Pagos Estructurado</h2>
-                    <p>Dividimos el riesgo. La inversión se abona de acuerdo a hitos de avance reales y demostrables, garantizando la seguridad financiera de Nidia Perfumes.</p>
-                </div>
-
-                <div class="payment-timeline">
-                    <div class="payment-step s1">
-                        <div class="step-pct">50%</div>
-                        <h4>Hito 1: Kick-Off / Anticipo</h4>
-                        <div class="pay-amount" id="pay-50">$ 5.500.000</div>
-                        <p style="margin-top: 10px;">Firma de contrato comercial. Reserva del equipo de ingeniería, inicio de diseño UI/UX, maquetación visual y setup base de Shopify.</p>
-                    </div>
-                    <div class="payment-step s2">
-                        <div class="step-pct" style="color: rgba(212,175,55,0.15);">30%</div>
-                        <h4>Hito 2: Avance Técnico Backend</h4>
-                        <div class="pay-amount" id="pay-30" style="color: var(--gold);">$ 3.300.000</div>
-                        <p style="margin-top: 10px;">Revisión en entorno de pruebas. Aprobación visual y demostración funcional de la lógica de decants, Metafields y motor de filtros AJAX.</p>
-                    </div>
-                    <div class="payment-step s3">
-                        <div class="step-pct" style="color: rgba(52,199,89,0.15);">20%</div>
-                        <h4>Hito 3: Go Live / Lanzamiento</h4>
-                        <div class="pay-amount" id="pay-20" style="color: #34c759;">$ 2.200.000</div>
-                        <p style="margin-top: 10px;">Liquidación final contra-entrega. Conexión de dominios, pasarelas de pago operativas, auditoría final y paso a producción en vivo.</p>
-                    </div>
-                </div>
-            </div>
-
         </div>
-    </section>
+    </div>
 
-    <footer style="padding: 4rem 5%; text-align: center; border-top: 1px solid var(--glass-border); background: var(--bg-pure);">
-        <div class="logo" style="justify-content: center; margin-bottom: 15px; font-size: 1.5rem;"><i class="fa-solid fa-gem" style="color: #444;"></i> ALTA 57</div>
-        <p style="color: var(--text-muted); font-size: 0.95rem;">Agencia de Ingeniería E-Commerce & Arquitectura Digital UX/UI.</p>
-        <p style="color: #333; font-size: 0.8rem; margin-top: 3rem;">Documento estrictamente confidencial. Propiedad intelectual de Alta 57 elaborada exclusivamente para Nidia Perfumes &copy; 2026. <br>Popayán, Colombia.</p>
+    <!-- Mobile Action -->
+    <button class="mobile-floating-btn" onclick="toggleFilters()">
+        <i class="fa-solid fa-sliders"></i> Filtrar Colección
+    </button>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="logo"><i class="fa-solid fa-gem" style="color: #444;"></i> NIDIA PERFUMES</div>
+            <p>Arquitectura E-Commerce & Ingeniería UX/UI por <strong>Alta 57</strong>.</p>
+            <p style="margin-top: 30px; font-size: 0.75rem; color: #333;">&copy; 2026 Nidia Perfumes Colombia. Todos los derechos reservados.</p>
+        </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // 1. Animaciones Scroll Observer
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        
-        window.addEventListener('load', () => { setTimeout(() => { document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('visible')); }, 100); });
+        /* ================= MASTER CATALOG (50 PERFUMES) ================= */
+        const catalog = [
+            { id: 1, name: "Aventus", brand: "Creed", cat: "nicho", gender: "Masculino", price: 1450000, occasions: ["Citas", "Oficina", "Noche"], accords: ["Cítrico", "Amaderado", "Cuero"], notes: ["Piña", "Abedul", "Almizcle"], elite: true },
+            { id: 2, name: "Baccarat Rouge 540", brand: "MFK", cat: "nicho", gender: "Unisex", price: 1950000, occasions: ["Fiesta", "Noche", "Citas"], accords: ["Amaderado", "Avainillado"], notes: ["Azafrán", "Amberwood", "Resina"], elite: true },
+            { id: 3, name: "Sauvage Elixir", brand: "Dior", cat: "diseñador", gender: "Masculino", price: 920000, occasions: ["Noche", "Fiesta", "Invierno"], accords: ["Cuero", "Amaderado"], notes: ["Canela", "Lavanda", "Sándalo"], elite: true },
+            { id: 4, name: "Khamrah", brand: "Lattafa", cat: "arabe", gender: "Unisex", price: 280000, occasions: ["Noche", "Invierno", "Citas"], accords: ["Avainillado", "Canela"], notes: ["Canela", "Dátiles", "Vainilla"], elite: false },
+            { id: 5, name: "Libre Intense", brand: "YSL", cat: "diseñador", gender: "Femenino", price: 720000, occasions: ["Citas", "Noche", "Oficina"], accords: ["Floral", "Avainillado"], notes: ["Lavanda", "Jazmín", "Vainilla"], elite: true },
+            { id: 6, name: "Layton", brand: "Parfums de Marly", cat: "nicho", gender: "Masculino", price: 1280000, occasions: ["Citas", "Noche", "Fiesta"], accords: ["Avainillado", "Amaderado"], notes: ["Manzana", "Lavanda", "Vainilla"], elite: true },
+            { id: 7, name: "Asad", brand: "Lattafa", cat: "arabe", gender: "Masculino", price: 210000, occasions: ["Oficina", "Noche", "Día"], accords: ["Amaderado", "Cuero"], notes: ["Pimienta", "Café", "Vainilla"], elite: false },
+            { id: 8, name: "Delina Exclusif", brand: "Parfums de Marly", cat: "nicho", gender: "Femenino", price: 1420000, occasions: ["Fiesta", "Citas"], accords: ["Floral", "Avainillado"], notes: ["Lichi", "Rosa", "Vainilla"], elite: true },
+            { id: 9, name: "Ombre Nomade", brand: "Louis Vuitton", cat: "nicho", gender: "Unisex", price: 2200000, occasions: ["Noche", "Fiesta"], accords: ["Cuero", "Amaderado"], notes: ["Oud", "Frambuesa", "Incienso"], elite: true },
+            { id: 10, name: "Bad Boy Extreme", brand: "CH", cat: "diseñador", gender: "Masculino", price: 650000, occasions: ["Noche", "Fiesta"], accords: ["Avainillado", "Amaderado"], notes: ["Cacao", "Salvia", "Pachulí"], elite: false }
+        ];
 
-        // 2. Navbar Blur Effect
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.style.background = 'rgba(0, 0, 0, 0.9)';
-                nav.style.boxShadow = '0 5px 20px rgba(0,0,0,0.5)';
-            } else {
-                nav.style.background = 'rgba(0, 0, 0, 0.75)';
-                nav.style.boxShadow = 'none';
-            }
-        });
-
-        // 3. UI Interactiva (Mockup Decants)
-        function updatePrice(btn, price, isFull) {
-            const siblings = btn.parentElement.children;
-            for(let i=0; i<siblings.length; i++) {
-                siblings[i].classList.remove('active');
-                siblings[i].style.background = 'rgba(0,0,0,0.5)';
-                siblings[i].style.color = 'var(--text-muted)';
-            }
-            btn.classList.add('active');
-            
-            const priceEl = document.getElementById('demo-price');
-            priceEl.style.opacity = 0;
-            priceEl.style.transform = "translateY(-5px)";
-            
-            setTimeout(() => {
-                priceEl.innerHTML = `$ ${price} <span style="font-size: 1rem; color: var(--text-muted); font-weight: 400; font-family: var(--font-main);">COP</span>`;
-                priceEl.style.opacity = 1;
-                priceEl.style.transform = "translateY(0)";
-                
-                if(isFull) {
-                    priceEl.style.color = '#fff';
-                    btn.style.background = 'var(--apple-blue)';
-                    btn.style.color = '#fff';
-                } else {
-                    priceEl.style.color = 'var(--apple-blue)';
-                    btn.style.background = '#222';
-                    btn.style.color = '#fff';
-                }
-            }, 200);
+        // Generate more to complete 50
+        const bNames = ["Dior", "Chanel", "Versace", "Armaf", "Mancera", "Montale", "Armani", "Xerjoff", "Nishane", "Amouage", "Initio", "Roja"];
+        const fNames = ["Elysium", "Hacivat", "Ani", "Side Effect", "Naxos", "Oud For Greatness", "Bleu", "Eros", "My Way", "Good Girl", "Si", "Yara", "Hawas", "Turathi", "Cedrat Boise", "Red Tobacco", "Pegasus", "Herod", "Greenley", "Reflection"];
+        for(let i=11; i<=50; i++) {
+            catalog.push({
+                id: i,
+                name: fNames[i % fNames.length] + (i % 2 === 0 ? " Parfum" : " Intense"),
+                brand: bNames[i % bNames.length],
+                cat: i % 4 === 0 ? "nicho" : (i % 4 === 1 ? "diseñador" : "arabe"),
+                gender: i % 3 === 0 ? "Unisex" : (i % 2 === 0 ? "Masculino" : "Femenino"),
+                price: Math.floor(Math.random() * (2200000 - 180000) + 180000),
+                occasions: ["Día", "Oficina"],
+                accords: ["Cítrico", "Amaderado"],
+                notes: ["Bergamota", "Geranio", "Pachulí"],
+                elite: i % 7 === 0
+            });
         }
 
-        // 4. Calculadora Financiera y Plan de Pagos Dinámico
-        const formatMoney = (amount) => new Intl.NumberFormat('es-CO', { minimumFractionDigits: 0 }).format(amount).replace(/,/g, '.');
-
-        const calculateTotal = () => {
-            let total = 0;
-            document.querySelectorAll('.price-calc').forEach(cb => {
-                if (cb.checked) total += parseInt(cb.getAttribute('data-val'));
-            });
-            
-            // Actualizar Gran Total
-            const totalDisplay = document.getElementById('grand-total');
-            totalDisplay.innerHTML = `$ ${formatMoney(total)} <span style="font-size: 1.5rem; color: var(--text-muted); font-weight: 500;">COP</span>`;
-            totalDisplay.style.transform = 'scale(1.03)';
-            setTimeout(() => totalDisplay.style.transform = 'scale(1)', 200);
-
-            // Actualizar Plan de Pagos (50 / 30 / 20)
-            document.getElementById('pay-50').textContent = `$ ${formatMoney(total * 0.50)}`;
-            document.getElementById('pay-30').textContent = `$ ${formatMoney(total * 0.30)}`;
-            document.getElementById('pay-20').textContent = `$ ${formatMoney(total * 0.20)}`;
+        /* ================= STATE ================= */
+        let filterState = {
+            cat: 'all',
+            price: 2500000,
+            gender: [],
+            occasion: [],
+            accord: []
         };
+        let currentP = null;
+        let luxuryMode = false;
 
-        document.querySelectorAll('.price-calc').forEach(cb => {
-            if(!cb.disabled) cb.addEventListener('change', calculateTotal);
+        /* ================= INITIALIZATION ================= */
+        document.addEventListener('DOMContentLoaded', () => {
+            initUI();
+            updateGrid();
+            setupInteractions();
         });
-        calculateTotal(); // Ejecutar al cargar
 
-        // 5. Gatillo de Cierre (Confeti y Mensaje)
-        document.getElementById('btn-accept').addEventListener('click', function() {
-            var duration = 3500;
-            var end = Date.now() + duration;
+        function initUI() {
+            new Swiper('.swiper-hero', {
+                autoplay: { delay: 6000, disableOnInteraction: false },
+                effect: 'fade',
+                fadeEffect: { crossFade: true },
+                loop: true,
+                speed: 1000
+            });
+            new Swiper('.swiper-cat', {
+                slidesPerView: 'auto',
+                spaceBetween: 15,
+                freeMode: true
+            });
+        }
 
-            (function frame() {
-                confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#0A84FF', '#ffffff', '#D4AF37'] });
-                confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#0A84FF', '#ffffff', '#D4AF37'] });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
-
-            this.innerHTML = '<i class="fa-solid fa-check-double"></i> Proyecto Aprobado Oficialmente';
-            this.style.background = '#ffffff';
-            this.style.color = '#000000';
-            this.style.pointerEvents = 'none';
-            this.style.boxShadow = '0 0 40px rgba(212,175,55,0.4)';
-            this.style.transform = 'scale(1.03)';
+        /* ================= AJAX-STYLE FILTER LOGIC ================= */
+        function updateGrid() {
+            const grid = document.getElementById('grid');
+            const loader = document.getElementById('loader');
             
+            grid.style.opacity = '0.2';
+            loader.style.display = 'flex';
+
             setTimeout(() => {
-                alert("¡Felicidades por dar el paso hacia la élite del e-commerce!\n\nEl equipo de Alta 57 ha sido notificado con éxito.\nNos pondremos en contacto con Nidia Perfumes a la mayor brevedad para tramitar los documentos del Hito 1 (Anticipo) e iniciar formalmente el proyecto.\n\nVamos a construir la mejor perfumería de Colombia.");
-            }, 1200);
-        });
+                const results = catalog.filter(p => {
+                    const cM = filterState.cat === 'all' || (filterState.cat === 'elite' ? p.elite : p.cat === filterState.cat);
+                    const pM = p.price <= filterState.price;
+                    const gM = filterState.gender.length === 0 || filterState.gender.includes(p.gender);
+                    const oM = filterState.occasion.length === 0 || p.occasions.some(o => filterState.occasion.includes(o));
+                    const aM = filterState.accord.length === 0 || p.accords.some(a => filterState.accord.includes(a));
+                    return cM && pM && gM && oM && aM;
+                });
+
+                grid.innerHTML = '';
+                if(results.length === 0) {
+                    grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:100px 20px; color:var(--text-muted);">No se encontraron fragancias con los criterios seleccionados. Intenta ajustar los filtros.</div>`;
+                } else {
+                    results.forEach(p => {
+                        const card = document.createElement('div');
+                        card.className = 'perfume-card';
+                        card.innerHTML = `
+                            ${p.elite ? '<div class="badge-elite">ELITE</div>' : ''}
+                            <div class="perfume-img-box"><img src="https://alta57.com/wp-content/uploads/2026/06/p${(p.id % 10) + 1}.webp" alt="${p.name}"></div>
+                            <span class="card-brand">${p.brand}</span>
+                            <h4 class="card-name">${p.name}</h4>
+                            <div class="card-price">$ ${fmt(p.price)}</div>
+                        `;
+                        card.onclick = () => openPDP(p);
+                        grid.appendChild(card);
+                    });
+                }
+                grid.style.opacity = '1';
+                loader.style.display = 'none';
+            }, 400);
+        }
+
+        /* ================= INTERACTION SETUP ================= */
+        function setupInteractions() {
+            // Category Slider
+            document.querySelectorAll('.category-card').forEach(btn => {
+                btn.onclick = () => {
+                    document.querySelectorAll('.category-card').forEach(x => x.classList.remove('active'));
+                    btn.classList.add('active');
+                    filterState.cat = btn.dataset.cat;
+                    updateGrid();
+                    if(window.innerWidth <= 1024) {
+                        document.getElementById('store').scrollIntoView({behavior:'smooth'});
+                    }
+                }
+            });
+
+            // Range Slider
+            const pInput = document.getElementById('priceInput');
+            pInput.oninput = (e) => {
+                filterState.price = e.target.value;
+                document.getElementById('priceLabel').textContent = `$ ${fmt(filterState.price).replace('.000', 'k')}`;
+                updateGrid();
+            };
+
+            // Multi-filters
+            document.querySelectorAll('.filter-item, .tag-btn').forEach(el => {
+                el.onclick = () => {
+                    const type = el.dataset.type;
+                    const val = el.dataset.val;
+                    el.classList.toggle('active');
+                    if(filterState[type].includes(val)) {
+                        filterState[type] = filterState[type].filter(x => x !== val);
+                    } else {
+                        filterState[type].push(val);
+                    }
+                    updateGrid();
+                };
+            });
+
+            // Resets
+            document.getElementById('resetBtn').onclick = () => {
+                filterState = { cat: 'all', price: 2500000, gender: [], occasion: [], accord: [] };
+                document.querySelectorAll('.filter-item, .tag-btn').forEach(x => x.classList.remove('active'));
+                pInput.value = 2500000;
+                document.getElementById('priceLabel').textContent = "$ 2.500k";
+                document.querySelectorAll('.category-card').forEach(x => {
+                    x.classList.remove('active');
+                    if(x.dataset.cat === 'all') x.classList.add('active');
+                });
+                updateGrid();
+            };
+
+            // Modal Interactions
+            document.getElementById('closePdp').onclick = () => {
+                document.getElementById('pdpModal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            };
+
+            document.querySelectorAll('.size-btn').forEach(btn => {
+                btn.onclick = () => {
+                    document.querySelectorAll('.size-btn').forEach(x => x.classList.remove('active'));
+                    btn.classList.add('active');
+                    recalcPDP();
+                }
+            });
+
+            document.getElementById('luxuryToggle').onclick = function() {
+                this.classList.toggle('active');
+                luxuryMode = this.classList.contains('active');
+                recalcPDP();
+            };
+
+            // Add to Cart
+            document.getElementById('cartAction').onclick = () => {
+                confetti({
+                    particleCount: 150,
+                    spread: 90,
+                    origin: { y: 0.6 },
+                    colors: ['#0071e3', '#ffffff', '#D4AF37']
+                });
+                const badge = document.querySelector('.cart-badge');
+                badge.textContent = parseInt(badge.textContent) + 1;
+                document.getElementById('closePdp').onclick();
+            };
+        }
+
+        /* ================= PDP DYNAMIC LOGIC ================= */
+        function openPDP(p) {
+            currentP = p;
+            luxuryMode = false;
+            document.getElementById('luxuryToggle').classList.remove('active');
+            
+            document.getElementById('pdpImage').src = `https://alta57.com/wp-content/uploads/2026/06/p${(p.id % 10) + 1}.webp`;
+            document.getElementById('pdpBrand').textContent = p.brand;
+            document.getElementById('pdpTitle').textContent = p.name;
+            document.getElementById('pdpGender').textContent = p.gender;
+            document.getElementById('pdpAccords').textContent = p.accords.join(' • ');
+            document.getElementById('nSalida').textContent = p.notes[0];
+            document.getElementById('nCorazon').textContent = p.notes[1];
+            document.getElementById('nBase').textContent = p.notes[2];
+
+            document.querySelectorAll('.size-btn').forEach(x => x.classList.remove('active'));
+            document.querySelector('[data-size="Full Bottle"]').classList.add('active');
+
+            recalcPDP();
+
+            document.getElementById('pdpModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function recalcPDP() {
+            const btn = document.querySelector('.size-btn.active');
+            const mod = parseFloat(btn.dataset.mod);
+            let finalPrice = currentP.price * mod;
+            if(luxuryMode) finalPrice += 25000;
+            document.getElementById('pdpPrice').textContent = `$ ${fmt(finalPrice)}`;
+        }
+
+        function fmt(val) {
+            return new Intl.NumberFormat('es-CO').format(Math.round(val));
+        }
+
+        function toggleFilters() {
+            const panel = document.getElementById('filterPanel');
+            const isO = panel.classList.toggle('open');
+            document.getElementById('closeFilterMobile').style.display = isO ? 'block' : 'none';
+        }
+
     </script>
 </body>
 </html>
